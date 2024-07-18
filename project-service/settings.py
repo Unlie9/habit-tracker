@@ -119,6 +119,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+ASSETS_ROOT = "static/assets"
+
 AUTH_USER_MODEL = 'habit_tracker.User'
 
 # Default primary key field type
