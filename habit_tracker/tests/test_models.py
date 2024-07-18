@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from habit_tracker.models import (
@@ -11,8 +12,7 @@ from habit_tracker.models import (
 class TestModels(TestCase):
     def setUp(self):
         self.user = User.objects.create(
-            nickname="johnny12",
-            email="johny12@gmail.com",
+            username="johnny12",
             password="John1234"
         )
 
@@ -41,9 +41,13 @@ class TestModels(TestCase):
         self.assertEqual(str(self.habit), expected)
 
     def test_user_str(self):
-        expected = f"{self.user.nickname} {self.user.email} (ID: {self.user.id})"
+        expected = f"johnny12 (ID: {self.user.id})"
 
         self.assertEqual(str(self.user), expected)
+
+    # def test_nickname_validation(self):
+    #     with self.assertRaises(ValidationError):
+    #         User.objects.create(nickname="test nickname!", email="test@gmail.com", password="test_password")
 
     def test_user_habit_str(self):
         expected = (f"{self.user_habit.user} {self.user_habit.habit.name}"
