@@ -1,8 +1,8 @@
 from django.utils import timezone
-
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class User(AbstractUser):
@@ -36,8 +36,8 @@ class UserHabit(models.Model):
 
 class UserHabitDetail(models.Model):
     user_habit = models.OneToOneField("UserHabit", on_delete=models.CASCADE)
-    times_per_day = models.IntegerField(default=1)
-    days_to_achieve = models.IntegerField(default=21, editable=False, blank=True, null=True)
+    times_per_day = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+    days_to_achieve = models.IntegerField(default=21, blank=True, null=True, validators=[MinValueValidator(1)])
     skip_day = models.BooleanField(default=False, editable=False, blank=True, null=True)
     achieved_habit = models.BooleanField(default=False, editable=False, blank=True, null=True)
     completed_per_day = models.IntegerField()
