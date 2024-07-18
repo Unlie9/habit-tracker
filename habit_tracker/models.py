@@ -40,7 +40,7 @@ class UserHabitDetail(models.Model):
     days_to_achieve = models.IntegerField(default=21, blank=True, null=True, validators=[MinValueValidator(1)])
     skip_day = models.BooleanField(default=False, editable=False, blank=True, null=True)
     achieved_habit = models.BooleanField(default=False, editable=False, blank=True, null=True)
-    completed_per_day = models.IntegerField()
+    completed_per_day = models.IntegerField(validators=[MinValueValidator(0)])
 
     def completed_with_times_per_day(self):
         self.skip_day = self.completed_per_day < self.times_per_day
