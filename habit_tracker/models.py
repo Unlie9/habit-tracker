@@ -36,11 +36,11 @@ class UserHabit(models.Model):
 
 class UserHabitDetail(models.Model):
     user_habit = models.OneToOneField("UserHabit", on_delete=models.CASCADE)
-    times_per_day = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+    times_per_day = models.IntegerField(default=1, null=True, blank=True, validators=[MinValueValidator(1)])
     days_to_achieve = models.IntegerField(default=21, blank=True, null=True, validators=[MinValueValidator(1)])
     skip_day = models.BooleanField(default=False, editable=False, blank=True, null=True)
     achieved_habit = models.BooleanField(default=False, editable=False, blank=True, null=True)
-    completed_per_day = models.IntegerField(validators=[MinValueValidator(0)])
+    completed_per_day = models.IntegerField(default=0, blank=True, null=True, validators=[MinValueValidator(0)])
 
     def completed_with_times_per_day(self):
         self.skip_day = self.completed_per_day < self.times_per_day
