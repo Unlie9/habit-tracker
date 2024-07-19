@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+
+<main class="log">
+    <div class="d-flex flex-column align-items-center py-5 container-fluid w-25 text-center">
+        <a href="/login">
+            <img class="logo" src="#" alt="logo">
+        </a>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Username" id="username" name="username" autofocus>
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+            </div>
+            <button type="submit" class="btn btn-outline-warning w-100">Log In</button>
+        </form>
+        <a href="https://github.com/Unlie9/habit-tracker" target="_blank">
+					<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" class="bi bi-github" fill="gray" viewBox="0 0 16 16">
+						<path d="M8 0a8 8 0 0 0-2.529 15.595c.4.073.549-.173.549-.385v-1.418c-2.235.487-2.709-1.073-2.709-1.073-.365-.929-.892-1.175-.892-1.175-.729-.498.056-.488.056-.488.809.057 1.233.832 1.233.832.717 1.223 1.883.868 2.339.665.072-.518.28-.868.51-1.067-1.778-.202-3.644-.889-3.644-3.952 0-.874.312-1.588.823-2.147-.083-.202-.357-1.015.078-2.115 0 0 .669-.215 2.192.82.636-.177 1.32-.266 2-.27.678.004 1.363.093 2 .27 1.523-1.035 2.191-.82 2.191-.82.435 1.1.162 1.913.078 2.115.511.559.823 1.273.823 2.147 0 3.071-1.876 3.749-3.651 3.946.287.248.541.736.541 1.482v2.2c0 .215.146.463.554.385A8 8 0 0 0 8 0z"/>
+					</svg>
+
+        </a>
+    </div>
+</main>
+{% endblock %}
