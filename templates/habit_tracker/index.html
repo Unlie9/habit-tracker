@@ -5,31 +5,43 @@
     <div class="container h-100">
         <h3 class="text-light p-0 mb-5">Hi there, <em class="text-warning h3">{{ user.username }}</em>!</h3>
         <div class="d-flex justify-content-between align-items-center my-3">
-            <em class="text-light m-0 h5">{{ date }}</em>
-            <button id="clear" type="button" class="btn btn-outline-warning btn-sm" title="clear all checked habits">Clear</button>
+            <em class="text-light m-0 h5">Your Progress</em>
+						<em class="text-light m-0 h5">active habits: {{ num_user_habits }}</em>
         </div>
-        <div class="progress" style="height: .4rem; background-color: gray;">
-            <div id="progress" class="progress-bar bg-warning" role="progressbar"
-                aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress" style="height: .4rem; background-color: deeppink;">
         </div>
-        {% if habits %}
-        <table class="table text-light my-4">
+        <table class="table text-light my-r">
             <thead>
-                <tr>
-                    <th>SMTH</th>
-                </tr>
+							<tr>
+								<th>Habit Name</th>
+								<th>Need times per day</th>
+								<th>Completed per day</th>
+								<th>Left to do</th>
+								<th>Complete today habit</th>
+							</tr>
             </thead>
             <tbody>
-                <!-- Add your dynamic content here -->
+							{% for details in user_habits %}
+									<tr>
+										{% if details.habit %}
+										{% endif %}
+										<td>{{ details.habit.name }}</td>
+										<td>{{ details.times_per_day }}</td>
+										<td>{{ details.completed_per_day }}</td>
+										<td>{{ details.left_to_do }}</td>
+										<td>{{ details.complete_today_habit }}</td>
+									</tr>
+								{% empty %}
+								<tr>
+								<td colspan="4">No habits assign yet.</td>
+								</tr>
+							{% endfor %}
             </tbody>
         </table>
     </div>
-    {% else %}
-    </div>  
-    <em class="h5 m-5" style="color: gray;">There are no habits yet...</em>
-    {% endif %}
-    <a class="text-warning" href="/new-habit">Add habit</a>
-    <a class="text-warning" href="/habits">Manage habits</a>
+    <a class="text-warning" href="/add_new_habit">Add habit</a>
+		<br>
+		<p class="text-warning" >You have visited this page {{ num_visits }} times</p>
 </main>
 {% load static %}
 <script src="{% static 'script.js' %}"></script>
