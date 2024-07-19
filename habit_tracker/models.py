@@ -13,8 +13,8 @@ class User(AbstractUser):
 
 
 class Habit(models.Model):
-    name = models.CharField(max_length=50, editable=False)
-    description = models.CharField(max_length=120, editable=False)
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=120)
 
     def __str__(self):
         return f"{self.name} {self.description}"
@@ -34,6 +34,13 @@ class UserHabit(models.Model):
 
     def left_to_do(self):
         return self.times_per_day - self.completed_per_day
+
+    def complete_today_habit(self):
+        complete = False
+        if self.times_per_day <= self.completed_per_day:
+            complete = True
+
+        return complete
 
     def __str__(self):
         return f"{self.user} {self.habit.name} {self.date_of_assign}"
