@@ -44,4 +44,10 @@ class UserHabitDetail(models.Model):
         if self.days_to_achieve == 0:
             self.achieved_habit = True
             self.save()
+            return "Yes"
+        else:
+            return "No"
+
+
+
 
