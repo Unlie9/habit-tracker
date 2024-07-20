@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from habit_tracker.forms import CustomUserCreationForm, HabitForm
+from habit_tracker.forms import CustomUserCreationForm, HabitForm, DeleteHabitForm
 from habit_tracker.models import (
     Habit,
     User,
@@ -60,7 +60,7 @@ def my_habits(request):
     return render(request, "habit_tracker/my_habits.html", context=context)
 
 
-class HabitsListView(LoginRequiredMixin, ListView):
+class HabitListView(LoginRequiredMixin, ListView):
     model = Habit
     context_object_name = "habits_list"
     template_name = "habit_tracker/all_habits.html"
@@ -97,15 +97,24 @@ class HabitUpdateView(LoginRequiredMixin, UpdateView):
 
 class HabitDeleteView(LoginRequiredMixin, DeleteView):
     model = Habit
+    form_class = DeleteHabitForm
+    template_name = "habit_tracker/habit_confirm_delete.html"
     success_url = reverse_lazy("all-habits")
 
 
 class AssignHabitView(LoginRequiredMixin, FormView):
     model = Habit
+    form_class = HabitForm
     template_name = "habit_tracker/assign_habit.html"
 
-    def post(self, request, *args, **kwargs):
-        habit = self.get_object()
+    def form_valid(self, form):
+        habit = form.cleaned_data['habit']
+        user = self.request.user
+        user_habit, created = UserHabit.objects.get_or_create(user=user, habit=habit)
+
+        if created:
+            UserHabitDetail.objects.create(user_habit=user_habit)
+        return redirect("all-habits")
 
 
 @login_required()
