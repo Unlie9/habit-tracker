@@ -2,10 +2,14 @@ from django.urls import path, include
 from habit_tracker.views import (
     index,
     my_profile,
-    HabitsListView,
     my_habits,
     confirm_operation,
-    complete_operation
+    complete_operation,
+    HabitListView,
+    HabitCreateView,
+    HabitUpdateView,
+    HabitDeleteView,
+    AssignHabitView,
 )
 
 urlpatterns = [
@@ -22,7 +26,11 @@ urlpatterns = [
         name="complete_operation"
     ),
     path("my_habits/", my_habits, name="my-habits"),
-    path("all_habits/", HabitsListView.as_view(), name="all-habits"),
+    path("all_habits/", HabitListView.as_view(), name="all-habits"),
+    path("all_habits/create_habit/", HabitCreateView.as_view(), name="create-habit"),
+    path("all_habits/<int:pk>/assign_habit/", AssignHabitView.as_view(), name="assign-habit"),
+    path("all_habits/<int:pk>/update_habit/", HabitUpdateView.as_view(), name="update-habit"),
+    path("all_habits/<int:pk>/delete_habit/", HabitDeleteView.as_view(), name="delete-habit"),
     path("my_profile/", my_profile, name="my-profile"),
 ]
 app_name = "habit_tracker"
