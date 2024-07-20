@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<main class="text-warning">
+		<em>Are you sure to delete {{ habit.name }}?</em>
+		<form action="" method="post" class="text-warning p-4 rounded">
+			{% csrf_token %}
+			<button type="submit" value="Submit" class="btn btn-danger">
+				Delete
+			</button>
+		</form>
+	</main>
+{% endblock %}
