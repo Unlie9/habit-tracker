@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{% load static %}
+	<main class="d-flex flex-column align-items-center justify-content-center">
+		<em class="text-warning"><a href="{% url "all-habits" %}" class="btn btn-warning float-right">Back to all habits</a></em>
+		<div class="container mt-4">
+			<h3 class="text-warning mb-4">
+				{% if form.instance.pk %}
+					Update Habit
+				{% else %}
+					Create New Habit
+				{% endif %}
+			</h3>
+			<form action="" method="post" novalidate class="text-warning p-4 rounded">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button type="submit" class="btn
+					{% if form.instance.pk %}
+						btn-primary
+					{% else %}
+						btn-success
+					{% endif %} btn-lg">
+					{% if form.instance.pk %}
+						Update
+					{% else %}
+						Submit
+					{% endif %}
+				</button>
+			</form>
+		</div>
+	</main>
+
+{% endblock %}
+
