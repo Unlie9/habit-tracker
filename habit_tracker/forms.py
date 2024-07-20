@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from habit_tracker.models import User
+from habit_tracker.models import User, Habit
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -24,3 +24,7 @@ class CustomUserCreationForm(UserCreationForm):
         return username
 
 
+class HabitForm(forms.ModelForm):
+    class Meta:
+        model = Habit
+        fields = ["name", "description"]
