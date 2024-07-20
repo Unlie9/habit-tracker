@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from habit_tracker.forms import CustomUserCreationForm, HabitForm
+from habit_tracker.forms import CustomUserCreationForm
 from habit_tracker.models import (
     Habit,
     User,
@@ -45,7 +45,7 @@ def index(request):
 class HabitsListView(LoginRequiredMixin, ListView):
     model = Habit
     context_object_name = "habits_list"
-    template_name = "habit_tracker/all-habits.html"
+    template_name = "habit_tracker/my_habits.html"
     paginate_by = 5
 
     # def get_context_data(self, object_list=None, **kwargs):
@@ -67,31 +67,3 @@ class HabitsListView(LoginRequiredMixin, ListView):
 def my_profile(request):
     user = request.user
     return render(request, "habit_tracker/my_profile.html", {"user": user})
-
-
-class HabitListView(LoginRequiredMixin, ListView):
-    model = Habit
-    paginate_by = 10
-
-
-class HabitDetailView(LoginRequiredMixin, DetailView):
-    model = Habit
-
-
-class HabitCreateView(LoginRequiredMixin, CreateView):
-    model = Habit
-    success_url = ""
-
-
-class HabitUpdateView(LoginRequiredMixin, UpdateView):
-    model = Habit
-    success_url = ""
-
-
-class HabitDeleteView(LoginRequiredMixin, DeleteView):
-    model = Habit
-    success_url = reverse_lazy("")
-
-
-class HabitAssignView(LoginRequiredMixin, FormView):
-    form_class = HabitForm
