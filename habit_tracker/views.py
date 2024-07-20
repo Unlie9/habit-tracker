@@ -42,10 +42,30 @@ def index(request):
     return render(request, "habit_tracker/index.html", context=context)
 
 
+@login_required
+def my_habits(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    user = request.user
+    user_habits = UserHabit.objects.filter(user=user)
+    user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
+
+    context = {
+        "user": user,
+        "user_habits": user_habits,
+        "user_habit_details": user_habit_details,
+    }
+
+    return render(request, "habit_tracker/my_habits.html", context=context)
+
+
+
+
 class HabitsListView(LoginRequiredMixin, ListView):
     model = Habit
     context_object_name = "habits_list"
-    template_name = "habit_tracker/my_habits.html"
+    template_name = "habit_tracker/all_habits.html"
     paginate_by = 5
 
     # def get_context_data(self, object_list=None, **kwargs):

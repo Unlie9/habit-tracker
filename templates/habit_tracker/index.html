@@ -13,20 +13,20 @@
 				<thead>
 					<tr>
 						<th>Habit Name</th>
-						<th>Need times per day</th>
-						<th>Completed per day</th>
-						<th>Left to do</th>
-						<th>Complete today habit</th>
+						<th>Completed today</th>
+						<th>Not completed today</th>
+						<th>Skip day</th>
+						<th>Days to achieve</th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for details in user_habits %}
+					{% for detail in user_habits_details %}
 						<tr>
-							<td>{{ details.habit.name }}</td>
-							<td>{{ details.times_per_day }}</td>
-							<td>{{ details.completed_per_day }}</td>
-							<td>{{ details.left_to_do }}</td>
-							<td>{{ details.complete_today_habit }}</td>
+							<td>{{ detail.habit.name }}</td>
+							<td><a href="#">+</a></td>
+							<td><a href="#">-</a></td>
+							<td>{{ detail.skip_day }}</td>
+							<td>{{ detail.days_to_achieve }}</td>
 						</tr>
 					{% empty %}
 						<tr>
@@ -36,7 +36,7 @@
 				</tbody>
 			</table>
 	</div>
-	<a class="text-warning" href="/add_new_habit">Add habit</a>
+	<a class="text-warning" href="{% url "all-habits" %}">Add new habit to your list</a>
 	<br>
 	<p class="text-warning" >You have visited this page {{ num_visits }} times</p>
 </main>
