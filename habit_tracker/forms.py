@@ -22,3 +22,5 @@ class CustomUserCreationForm(UserCreationForm):
                 code="invalid",
             )
         return username
+
+

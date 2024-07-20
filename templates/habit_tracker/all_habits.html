@@ -1,40 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main class="d-flex flex-column align-items-center justify-content-center">
-	<div class="container h-100">
-		<h3 class="text-light p-0 mb-5"><em class="text-warning h3">Available habits</em></h3>
-		<div class="d-flex justify-content-between align-items-center my-3">
-			<em class="text-light m-0 h5">Your Progress</em>
-			<a href="#" class="btn btn-warning float-right">Create New Habit</a>
-		</div>
-		<div class="progress" style="height: .4rem; background-color: greenyellow;"></div>
+	<main class="d-flex flex-column align-items-center justify-content-center">
+		<div class="container h-100">
+			<h3 class="text-light p-0 mb-5"><em class="text-warning h3">Available habits</em></h3>
+			<div class="d-flex justify-content-between align-items-center my-3">
+				<em class="text-light m-0 h5">Your Progress</em>
+				<a href="#" class="btn btn-warning float-right">Create New Habit</a>
+			</div>
+			<div class="progress" style="height: .4rem; background-color: greenyellow;"></div>
 			<table class="table text-light my-r mb-4" style="margin-bottom: 40px;">
 				<thead>
-					<tr>
-						<th>Name</th>
-						<th style="">Description</th>
-						<th class="actions-column">Actions</th>
-					</tr>
+				<tr>
+					<th>Name</th>
+					<th style="">Description</th>
+					<th class="actions-column">Actions</th>
+				</tr>
 				</thead>
 				<tbody>
-					{% for habit in habits_list %}
-						<tr>
-							<td>{{ habit.name }}</td>
-							<td>{{ habit.description }}</td>
-							<td class="actions-column">
-								<a href="#" class="btn btn-primary btn-sm">Assign</a>
-							</td>
-						</tr>
-					{% empty %}
-						<tr>
-							<td colspan="3" class="text-center">No habits available</td>
-						</tr>
-					{% endfor %}
+				{% for habit in habits_list %}
+					<tr>
+						<td>{{ habit.name }}</td>
+						<td>{{ habit.description }}</td>
+						<td class="actions-column">
+							<a href="#" class="btn btn-primary btn-sm">Assign</a>
+						</td>
+					</tr>
+				{% empty %}
+					<tr>
+						<td colspan="3" class="text-center">No habits available</td>
+					</tr>
+				{% endfor %}
 				</tbody>
 			</table>
-	</div>
-</main>
+		</div>
+	</main>
 {% endblock %}
 
 

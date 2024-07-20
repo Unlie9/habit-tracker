@@ -1,64 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% load static %}	
-<main class="d-flex flex-column align-items-center justify-content-center">
-	<div class="container h-100">
-		<h3 class="text-light p-0 mb-5">Hi there, <em class="text-warning h3">{{ user.username }}</em>!</h3>
-		<div class="d-flex justify-content-between align-items-center my-3">
-			<em class="text-light m-0 h5">Your Progress</em>
-			<em class="text-light m-0 h5">active habits: {{ num_user_habits }}</em>
-		</div>
-		<div class="progress" style="height: .6rem; background-color: deeppink;"></div>
+	{% load static %}
+	<main class="d-flex flex-column align-items-center justify-content-center">
+		<div class="container h-100">
+			<h3 class="text-light p-0 mb-5">Hi there, <em class="text-warning h3">{{ user.username }}</em>!</h3>
+			<div class="d-flex justify-content-between align-items-center my-3">
+				<em class="text-light m-0 h5">Your Progress</em>
+				<em class="text-light m-0 h5">active habits: {{ num_user_habits }}</em>
+			</div>
+			<div class="progress" style="height: .6rem; background-color: deeppink;"></div>
 			<table class="table text-light my-r w-400">
 				<thead>
-					<tr>
-						<th>Habit Name</th>
-						<th>Completed today</th>
-						<th>Not completed today</th>
-						<th>Skip day</th>
-						<th>Days to achieve</th>
-						<th>Reset</th>
-					</tr>
+				<tr>
+					<th>Habit Name</th>
+					<th>Completed today</th>
+					<th>Not completed today</th>
+					<th>Skip day</th>
+					<th>Days to achieve</th>
+					<th>Reset</th>
+				</tr>
 				</thead>
 				<tbody>
-					{% for detail in user_habit_details %}
-						<tr>
-							<td>{{ detail.user_habit.habit.name }}</td>
-							<td>
-								<a href="{% url "confirm_operation" detail.id "completed" %}" >
-									<img style="width: 30px" src="/static/assets/pur_plus.png" alt="logo">
-								</a>
-							</td>
-							<td>
-								<a href="{% url "confirm_operation" detail.id "not completed" %}">
-									<img style="width: 30px" src="/static/assets/minus.png" alt="logo">
-								</a>
-							</td>
-							<td>{{ detail.skip_day }}</td>
-							<td>{{ detail.days_to_achieve }}</td>
-							<td>
-								<a href="{% url "confirm_operation" detail.id "reset" %}">
-									<img style="width: 30px" src="/static/assets/reset.png" alt="logo">
-								</a>
-							</td>
-						</tr>
-					{% empty %}
-						<tr>
-							<td colspan="4">No habits assign yet.</td>
-						</tr>
-					{% endfor %}
+				{% for detail in user_habit_details %}
+					<tr>
+						<td>{{ detail.user_habit.habit.name }}</td>
+						<td>
+							<a href="{% url "confirm_operation" detail.id "completed" %}">
+								<img style="width: 30px" src="/static/assets/pur_plus.png" alt="logo">
+							</a>
+						</td>
+						<td>
+							<a href="{% url "confirm_operation" detail.id "not completed" %}">
+								<img style="width: 30px" src="/static/assets/minus.png" alt="logo">
+							</a>
+						</td>
+						<td>{{ detail.skip_day }}</td>
+						<td>{{ detail.days_to_achieve }}</td>
+						<td>
+							<a href="{% url "confirm_operation" detail.id "reset" %}">
+								<img style="width: 30px" src="/static/assets/reset.png" alt="logo">
+							</a>
+						</td>
+					</tr>
+				{% empty %}
+					<tr>
+						<td colspan="4">No habits assign yet.</td>
+					</tr>
+				{% endfor %}
 				</tbody>
 			</table>
-	</div>
-	<a class="text-warning" href="{% url "all-habits" %}">Add new habit to your list</a>
-	<br>
-	<p class="text-warning" >You have visited this page {{ num_visits }} times</p>
-</main>
-{% load static %}
-<script src="{% static 'script.js' %}"></script>
+		</div>
+		<a class="text-warning" href="{% url "all-habits" %}">Add new habit to your list</a>
+		<br>
+		<p class="text-warning">You have visited this page {{ num_visits }} times</p>
+	</main>
+	{% load static %}
+	<script src="{% static 'script.js' %}"></script>
 {% endblock %}
 
 <footer class="bg-dark text-center text-light fixed-bottom p-1">
-    &copy; 2024 Unlie9
+	&copy; 2024 Unlie9
 </footer>
