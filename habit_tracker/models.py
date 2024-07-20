@@ -45,7 +45,3 @@ class UserHabitDetail(models.Model):
             return "Yes"
         else:
             return "No"
-
-
-
-
