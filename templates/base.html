@@ -2,28 +2,30 @@
 <html lang="en">
 <head>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  {% block title %}<title>Habit-Tracker</title>{% endblock %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'styles.css' %}">
+	{% block title %}<title>Habit-Tracker</title>{% endblock %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+				integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-  {% block sidebar %}
-    {% include "includes/sidebar.html" %}
-  {% endblock %}
+{% if not request.path == "/accounts/login/" %}
+	{% block sidebar %}
+		{% include "includes/sidebar.html" %}
+	{% endblock %}
+{% endif %}
 
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
+<main>
+	{% block content %}
+	{% endblock %}
+</main>
 
-  <footer class="bg-dark text-center text-light fixed-bottom p-1">
-    &copy; 2024 Unlie9
-  </footer>
-  
-  <script src="{% static 'script.js' %}"></script>
+<footer class="bg-dark text-center text-light fixed-bottom p-1">
+	&copy; 2024 Unlie9
+</footer>
+
+<script src="{% static 'script.js' %}"></script>
 </body>
 </html>

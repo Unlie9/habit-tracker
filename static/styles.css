@@ -40,7 +40,7 @@
 }
 
 html {
-  background-color: var(--bs-gray-dark);
+  background-color: var(--bs-white);
 }
 
 body {
@@ -85,5 +85,25 @@ footer {
   height: 28px;
 }
 
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  background-color: var(--bs-gray-dark);
+}
+
+footer {
+  background-color: var(--bs-dark);
+}
 
 
