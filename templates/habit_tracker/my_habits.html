@@ -6,10 +6,10 @@
 		<h3 class="text-light p-0 mb-5"><em class="text-warning h3">Available habits</em></h3>
 		<div class="d-flex justify-content-between align-items-center my-3">
 			<em class="text-light m-0 h5">Your Progress</em>
-			<a href="{% url "all-habits" %}" class="btn btn-warning float-right">Assign New Habit</a>
+			<a href="{% url "all-habits" %}" class="btn btn-warning float-right">Create New Habit</a>
 		</div>
 		<div class="progress" style="height: .4rem; background-color: aqua;"></div>
-			<table class="table text-light my-r mb-4" style="margin-bottom: 40px;">
+			<table class="table text-light my-r">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -33,7 +33,9 @@
 							</td>
 							<td>{{ detail.achieved_habit_is_true }}</td>
 							<td class="actions-column">
-								<a href="#" class="btn btn-outline-danger btn-sm">Remove from list</a>
+								<a href="#" class="btn btn-outline-primary btn-sm">Assign</a>
+								<a href="#" class="btn btn-outline-success btn-sm">Update</a>
+								<a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
 							</td>
 						</tr>
 					{% empty %}
