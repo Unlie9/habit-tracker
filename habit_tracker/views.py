@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from habit_tracker.forms import CustomUserCreationForm
 from habit_tracker.models import (
@@ -85,6 +85,22 @@ class HabitsListView(LoginRequiredMixin, ListView):
 def my_profile(request):
     user = request.user
     return render(request, "habit_tracker/my_profile.html", {"user": user})
+
+
+def days_to_achieve_by_buttons(request, user_habit_detail_id, operation):
+    user_habit_detail = get_object_or_404(UserHabitDetail, id=user_habit_detail_id)
+
+    if operation == "+":
+        user_habit_detail.days_to_achieve -= 1
+        user_habit_detail.skip_day = False
+    elif operation == "-":
+        user_habit_detail.skip_day = True
+    elif operation == "reset":
+
+
+    user_habit_detail.save()
+    return redirect("index")
+
 
 
 
