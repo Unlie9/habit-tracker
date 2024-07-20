@@ -60,8 +60,6 @@ def my_habits(request):
     return render(request, "habit_tracker/my_habits.html", context=context)
 
 
-
-
 class HabitsListView(LoginRequiredMixin, ListView):
     model = Habit
     context_object_name = "habits_list"
@@ -87,3 +85,6 @@ class HabitsListView(LoginRequiredMixin, ListView):
 def my_profile(request):
     user = request.user
     return render(request, "habit_tracker/my_profile.html", {"user": user})
+
+
+
