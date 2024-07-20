@@ -2,9 +2,11 @@
 
 {% block content %}
 	<main class="text-warning">
+		<em class="text-warning"><a href="{% url "all-habits" %}" class="btn btn-warning">Back to all habits</a></em>
 		<em>Are you sure to delete {{ habit.name }}?</em>
 		<form action="" method="post" class="text-warning p-4 rounded">
 			{% csrf_token %}
+			{{ form.as_p }}
 			<button type="submit" value="Submit" class="btn btn-danger">
 				Delete
 			</button>
