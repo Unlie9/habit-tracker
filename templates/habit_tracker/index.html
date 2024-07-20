@@ -10,35 +10,35 @@
 			<em class="text-light m-0 h5">active habits: {{ num_user_habits }}</em>
 		</div>
 		<div class="progress" style="height: .6rem; background-color: deeppink;"></div>
-			<table class="table text-light my-r">
+			<table class="table text-light my-r w-400">
 				<thead>
-					<tr bgcolor="#8a2be2">
+					<tr>
 						<th>Habit Name</th>
 						<th>Completed today</th>
 						<th>Not completed today</th>
 						<th>Skip day</th>
 						<th>Days to achieve</th>
-						<th bgcolor="black">Reset</th>
+						<th>Reset</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for detail in user_habit_details %}
-						<tr bgcolor="#8a2be2">
-							<td bgcolor="#8a2be2">{{ detail.user_habit.habit.name }}</td>
+						<tr>
+							<td>{{ detail.user_habit.habit.name }}</td>
 							<td>
-								<a href="{% url "days_to_achieve_by_buttons" detail.id "+" %}" >
+								<a href="{% url "confirm_operation" detail.id "completed" %}" >
 									<img style="width: 30px" src="/static/assets/pur_plus.png" alt="logo">
 								</a>
 							</td>
 							<td>
-								<a href="{% url "days_to_achieve_by_buttons" detail.id "-" %}">
+								<a href="{% url "confirm_operation" detail.id "not completed" %}">
 									<img style="width: 30px" src="/static/assets/minus.png" alt="logo">
 								</a>
 							</td>
 							<td>{{ detail.skip_day }}</td>
 							<td>{{ detail.days_to_achieve }}</td>
 							<td>
-								<a>
+								<a href="{% url "confirm_operation" detail.id "reset" %}">
 									<img style="width: 30px" src="/static/assets/reset.png" alt="logo">
 								</a>
 							</td>

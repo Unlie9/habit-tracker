@@ -87,20 +87,28 @@ def my_profile(request):
     return render(request, "habit_tracker/my_profile.html", {"user": user})
 
 
-def days_to_achieve_by_buttons(request, user_habit_detail_id, operation):
-    user_habit_detail = get_object_or_404(UserHabitDetail, id=user_habit_detail_id)
+def confirm_operation(request, detail_id, operation):
+    detail = get_object_or_404(UserHabitDetail, id=detail_id)
 
-    if operation == "+":
-        user_habit_detail.days_to_achieve -= 1
-        user_habit_detail.skip_day = False
-    elif operation == "-":
-        user_habit_detail.skip_day = True
-    elif operation == "reset":
+    context = {
+        "detail": detail,
+        "operation": operation
+    }
+    return render(request, "habit_tracker/confirmation_operation.html", context)
 
 
-    user_habit_detail.save()
+def complete_operation(request, detail_id, operation):
+    detail = get_object_or_404(UserHabitDetail, id=detail_id)
+
+    if detail.user_habit.user == request.user:
+        if operation == "completed":
+            detail.days_to_achieve -= 1
+            detail.skip_day = False
+        elif operation == "not completed":
+            detail.skip_day = True
+        elif operation == "reset":
+            detail.days_to_achieve = 21
+            detail.skip_day = False
+
+    detail.save()
     return redirect("index")
-
-
-
-
