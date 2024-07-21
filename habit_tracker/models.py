@@ -16,6 +16,9 @@ class Habit(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=120)
 
+    class Meta:
+        ordering = ("name", )
+
     def __str__(self):
         return f"{self.name} {self.description}"
 
@@ -39,6 +42,9 @@ class UserHabitDetail(models.Model):
     days_to_achieve = models.IntegerField(default=21, blank=True, null=True, validators=[MinValueValidator(1)])
     skip_day = models.BooleanField(default=False, editable=False, blank=True, null=True)
     achieved_habit = models.BooleanField(default=False, editable=False, blank=True, null=True)
+
+    class Meta:
+        ordering = ("user_habit__date_of_assign", )
 
     def achieved_habit_is_true(self):
         if self.days_to_achieve == 0:
