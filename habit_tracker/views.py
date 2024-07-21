@@ -1,6 +1,7 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from habit_tracker.forms import CustomUserCreationForm, HabitForm, DeleteHabitForm
@@ -28,9 +29,13 @@ def index(request):
     user = request.user
     user_habits = UserHabit.objects.filter(user=user)
     user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
-    num_user_habits = UserHabit.objects.count()
+    num_user_habits = UserHabitDetail.objects.filter(user_habit__user=user).count()
     num_visits = request.session.get("num_visits", 0)
     request.session["num_visits"] = num_visits + 1
+
+    paginator = Paginator(user_habit_details, 3)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
 
     context = {
         "user": user,
@@ -38,27 +43,46 @@ def index(request):
         "user_habit_details": user_habit_details,
         "num_user_habits": num_user_habits,
         "num_visits": num_visits + 1,
+        "page": page,
     }
 
     return render(request, "habit_tracker/index.html", context=context)
 
 
-@login_required
-def my_habits(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
+# @login_required
+# def my_habits(request):
+#     if not request.user.is_authenticated:
+#         return redirect('login')
+#
+#     user = request.user
+#     user_habits = UserHabit.objects.filter(user=user)
+#     user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
+#
+#     context = {
+#         "user": user,
+#         "user_habits": user_habits,
+#         "user_habit_details": user_habit_details,
+#     }
+#
+#     return render(request, "habit_tracker/my_habits.html", context=context)
 
-    user = request.user
-    user_habits = UserHabit.objects.filter(user=user)
-    user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
 
-    context = {
-        "user": user,
-        "user_habits": user_habits,
-        "user_habit_details": user_habit_details,
-    }
+class MyHabitsListView(LoginRequiredMixin, ListView):
+    template_name = "habit_tracker/my_habits.html"
+    context_object_name = "user_habits"
+    paginate_by = 3
 
-    return render(request, "habit_tracker/my_habits.html", context=context)
+    def get_queryset(self):
+        return UserHabit.objects.filter(user=self.request.user).order_by("-date_of_assign")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_habits = context["user_habits"]
+        user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
+        num_user_habits = UserHabitDetail.objects.filter(user_habit__user=self.request.user).count()
+        context["user_habit_details"] = user_habit_details
+        context["num_user_habits"] = num_user_habits
+        return context
 
 
 class HabitListView(LoginRequiredMixin, ListView):
@@ -97,41 +121,37 @@ class HabitUpdateView(LoginRequiredMixin, UpdateView):
     model = Habit
     form_class = HabitForm
     template_name = "habit_tracker/habit_form.html"
-    success_url = reverse_lazy("all-habits")
-
-    def get_queryset(self):
-        return Habit.objects.filter(userhabit__user=self.request.user)
+    success_url = reverse_lazy("my-habits")
 
 
-class HabitDeleteView(LoginRequiredMixin, DeleteView):
-    model = Habit
-    form_class = DeleteHabitForm
-    template_name = "habit_tracker/habit_confirm_delete.html"
-    success_url = reverse_lazy("all-habits")
+@login_required
+def assign_habit_to_user(request, pk):
+    user = request.user
+    habit = get_object_or_404(Habit, pk=pk)
 
-    def get_queryset(self):
-        return Habit.objects.filter(userhabit__user=self.request.user)
+    user_habit, created = UserHabit.objects.get_or_create(user=user, habit=habit)
+    if created:
+        UserHabitDetail.objects.create(user_habit=user_habit)
+
+    return redirect(reverse_lazy("all-habits"))
 
 
-class AssignHabitView(LoginRequiredMixin, FormView):
-    model = Habit
-    form_class = HabitForm
-    template_name = "habit_tracker/assign_habit.html"
+def remove_habit_from_user(request, pk):
+    user = request.user
+    habit = get_object_or_404(Habit, pk=pk)
 
-    def form_valid(self, form):
-        habit = form.cleaned_data['habit']
-        user = self.request.user
-        user_habit, created = UserHabit.objects.get_or_create(user=user, habit=habit)
+    user_habit = UserHabit.objects.filter(user=user, habit=habit).first()
 
-        if created:
-            UserHabitDetail.objects.create(user_habit=user_habit)
-        return redirect("all-habits")
+    if user_habit:
+        UserHabitDetail.objects.filter(user_habit=user_habit).delete()
+
+    return redirect(reverse_lazy("my-habits"))
 
 
 class UserHabitDetailUpdateView(LoginRequiredMixin, UpdateView):
     model = UserHabitDetail
-    fields = "__all__"
-    success_url = reverse_lazy("my-habits")
+    fields = ["days_to_achieve"]
+    success_url = reverse_lazy("index")
 
 
 class RegisterView(CreateView):
@@ -143,18 +163,6 @@ class RegisterView(CreateView):
     #     user = form.save()
     #     login(self.request, user)
     #     return super().form_valid(form)
-
-# def register_view(request):
-#     if request.method == "POST":
-#         form = CustomUserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             return redirect("all-habits")
-#     else:
-#         form = CustomUserCreationForm()
-#
-#     return render(request, "registration/register.html", {"form": form})
 
 
 @login_required
