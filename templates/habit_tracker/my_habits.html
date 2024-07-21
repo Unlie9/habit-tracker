@@ -33,6 +33,7 @@
 						</td>
 						<td>{{ detail.achieved_habit_is_true }}</td>
 						<td class="actions-column">
+							<a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-warning btn-sm">Edit</a>
 							<a href="#" class="btn btn-danger btn-sm">Remove from my list</a>
 						</td>
 					</tr>
