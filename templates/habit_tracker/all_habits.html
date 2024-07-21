@@ -24,8 +24,6 @@
 						<td>{{ habit.description }}</td>
 						<td class="actions-column">
 							<a href="{% url "assign-habit" habit.pk %}" class="btn btn-primary btn-sm">Assign</a>
-							<a href="{% url "update-habit" habit.pk %}" class="btn btn-outline-primary btn-sm">Edit</a>
-							<a href="{% url "delete-habit" habit.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
 						</td>
 					</tr>
 				{% empty %}
