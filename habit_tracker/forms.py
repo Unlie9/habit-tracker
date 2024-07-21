@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from habit_tracker.models import User, Habit
+from habit_tracker.models import User, Habit, UserHabitDetail
 
 
 class CustomUserCreationForm(UserCreationForm):
