@@ -1,23 +1,28 @@
-from django.contrib.auth import login
+from django.db.models import Q
+from django.utils import timezone
+
 from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.core.paginator import Paginator
+
 from django.shortcuts import render, redirect, get_object_or_404
+
 from django.urls import reverse_lazy
-from habit_tracker.forms import CustomUserCreationForm, HabitForm, DeleteHabitForm
+
+from habit_tracker.forms import CustomUserCreationForm, HabitForm, HabitSearchForm
+
 from habit_tracker.models import (
     Habit,
-    User,
     UserHabitDetail,
     UserHabit
 )
+
 from django.views.generic import (
     ListView,
-    DetailView,
     UpdateView,
     CreateView,
-    DeleteView,
-    FormView
 )
 
 
@@ -70,18 +75,23 @@ def index(request):
 class MyHabitsListView(LoginRequiredMixin, ListView):
     template_name = "habit_tracker/my_habits.html"
     context_object_name = "user_habits"
-    paginate_by = 3
+    paginate_by = 5
 
     def get_queryset(self):
-        return UserHabit.objects.filter(user=self.request.user).order_by("-date_of_assign")
+        queryset = UserHabit.objects.filter(user=self.request.user).order_by("-date_of_assign")
+        name_search = self.request.GET.get("name")
+        if name_search:
+            queryset = queryset.filter(name__icontains=name_search)
+        return queryset
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(MyHabitsListView, self).get_context_data(**kwargs)
         user_habits = context["user_habits"]
         user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
         num_user_habits = UserHabitDetail.objects.filter(user_habit__user=self.request.user).count()
         context["user_habit_details"] = user_habit_details
         context["num_user_habits"] = num_user_habits
+        context["search_form"] = HabitSearchForm(self.request.GET)
         return context
 
 
@@ -91,28 +101,21 @@ class HabitListView(LoginRequiredMixin, ListView):
     template_name = "habit_tracker/all_habits.html"
     paginate_by = 5
 
+    def get_queryset(self):
+        queryset = Habit.objects.all().order_by("-id")
+        name_search = self.request.GET.get('name', '')
+        if name_search:
+            queryset = queryset.filter(name__icontains=name_search)
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super(HabitListView, self).get_context_data(**kwargs)
-
         habits = context["habits_list"]
         num_habits = Habit.objects.count()
+        context["habits"] = habits
         context["num_habits"] = num_habits
-
+        context["search_form"] = HabitSearchForm(self.request.GET)
         return context
-
-    # def get_context_data(self, object_list=None, **kwargs):
-    #     context = super(ManufacturerListView, self).get_context_data(**kwargs)
-    #
-    #     context["search_form"] = ManufacturerNameSearchForm()
-    #     return context
-    #
-    # def get_queryset(self):
-    #     queryset = Car.objects.all()
-    #     name = self.request.GET.get("name")
-    #
-    #     if name:
-    #         return queryset.filter(model__icontains=name)
-    #     return queryset
 
 
 class HabitCreateView(LoginRequiredMixin, CreateView):
@@ -140,11 +143,14 @@ def assign_habit_to_user(request, pk):
 
     user_habit, created = UserHabit.objects.get_or_create(user=user, habit=habit)
     if created:
+        user_habit.date_of_assign = timezone.now()
+        user_habit.save()
         UserHabitDetail.objects.create(user_habit=user_habit)
 
     return redirect(reverse_lazy("all-habits"))
 
 
+@login_required
 def remove_habit_from_user(request, pk):
     user = request.user
     habit = get_object_or_404(Habit, pk=pk)
@@ -183,6 +189,7 @@ def my_profile(request):
     return render(request, "habit_tracker/my_profile.html", {"user": user})
 
 
+@login_required
 def confirm_operation(request, detail_id, operation):
     detail = get_object_or_404(UserHabitDetail, id=detail_id)
 
@@ -193,6 +200,7 @@ def confirm_operation(request, detail_id, operation):
     return render(request, "habit_tracker/confirmation_operation.html", context)
 
 
+@login_required
 def complete_operation(request, detail_id, operation):
     detail = get_object_or_404(UserHabitDetail, id=detail_id)
 

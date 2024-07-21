@@ -78,3 +78,19 @@ class DeleteHabitForm(forms.ModelForm):
     class Meta:
         model = Habit
         fields = []
+
+
+class HabitSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=30,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search by name"}
+        ),
+    )
+
+
+class UserHabitDetailSearchForm(forms.Form):
+    pass
+

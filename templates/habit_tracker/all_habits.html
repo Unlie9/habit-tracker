@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
 	<main class="d-flex flex-column align-items-center justify-content-center">
@@ -8,6 +9,10 @@
 				<a href="{% url 'create-habit' %}" class="btn btn-warning float-right">Create New Habit</a>
 				<a href="{% url "my-habits" %}" class="btn btn-warning float-right">Go to my habits</a>
 			</div>
+			<form method="get" action="">
+				{{ search_form|crispy }}
+				<input class="col-xl-12" type="submit" value="🔎">
+			</form>
 			<div class="progress" style="height: .4rem; background-color: greenyellow;"></div>
 			<table class="table text-light my-r mb-4">
 				<thead>
