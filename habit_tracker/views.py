@@ -87,6 +87,11 @@ class HabitCreateView(LoginRequiredMixin, CreateView):
     form_class = HabitForm
     success_url = reverse_lazy("all-habits")
 
+    def form_valid(self, form):
+        habit = form.save()
+        UserHabit.objects.create(user=self.request.user, habit=habit)
+        return super().form_valid(form)
+
 
 class HabitUpdateView(LoginRequiredMixin, UpdateView):
     model = Habit
@@ -94,12 +99,18 @@ class HabitUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "habit_tracker/habit_form.html"
     success_url = reverse_lazy("all-habits")
 
+    def get_queryset(self):
+        return Habit.objects.filter(userhabit__user=self.request.user)
+
 
 class HabitDeleteView(LoginRequiredMixin, DeleteView):
     model = Habit
     form_class = DeleteHabitForm
     template_name = "habit_tracker/habit_confirm_delete.html"
     success_url = reverse_lazy("all-habits")
+
+    def get_queryset(self):
+        return Habit.objects.filter(userhabit__user=self.request.user)
 
 
 class AssignHabitView(LoginRequiredMixin, FormView):

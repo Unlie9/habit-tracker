@@ -2,9 +2,9 @@
 
 {% block content %}
     <h2>Update User Habit Detail</h2>
-    <form method="post">
+    <form method="post" class="form-container">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Sumbit</button>
+        <button type="submit" class="submit-button">Submit</button>
     </form>
 {% endblock %}

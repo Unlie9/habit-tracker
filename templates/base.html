@@ -10,38 +10,63 @@
 	{% load static %}
 	<link rel="stylesheet" href="{% static 'styles.css' %}">
 	<style>
-		body, html {
-			height: 100%;
-		}
-		main {
-			min-height: calc(100vh - 56px - 40px); /* Adjusting for header and footer height */
-			padding-top: 20px;
-		}
-		footer {
-			height: 40px;
-		}
+      .center-table {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+      }
+
+      table {
+          margin: 0 auto;
+      }
 	</style>
 </head>
-<body class="bg-dark text-light">
-{% if not request.path == "/accounts/login/" %}
+<body>
+{% if not request.path == "/accounts/login/" and not request.path == "/register/" %}
 	{% block sidebar %}
 		{% include "includes/sidebar.html" %}
 	{% endblock %}
 {% endif %}
 
-<main class="container">
+<main class="center-table">
 	{% block content %}
+		<div class="table-responsive">
+			<table class="table table-dark table-bordered">
+				<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">First</th>
+					<th scope="col">Last</th>
+					<th scope="col">Handle</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<th scope="row">1</th>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>@mdo</td>
+				</tr>
+				<tr>
+					<th scope="row">2</th>
+					<td>Jacob</td>
+					<td>Thornton</td>
+					<td>@fat</td>
+				</tr>
+				<tr>
+					<th scope="row">3</th>
+					<td colspan="2">Larry the Bird</td>
+					<td>@twitter</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
 	{% endblock %}
 </main>
 
-<footer class="bg-dark text-center text-light p-1">
+<footer class="bg-dark text-center text-light fixed-bottom p-1">
 	&copy; 2024 Unlie9
 </footer>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc0I8t2lWYyoI9d9i/tp6Nf6bCB5TV1KT6Hg8vFvT" crossorigin="anonymous"></script>
-<script src="{% static 'script.js' %}"></script>
 </body>
 </html>
