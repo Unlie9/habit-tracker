@@ -91,6 +91,15 @@ class HabitListView(LoginRequiredMixin, ListView):
     template_name = "habit_tracker/all_habits.html"
     paginate_by = 5
 
+    def get_context_data(self, **kwargs):
+        context = super(HabitListView, self).get_context_data(**kwargs)
+
+        habits = context["habits_list"]
+        num_habits = Habit.objects.count()
+        context["num_habits"] = num_habits
+
+        return context
+
     # def get_context_data(self, object_list=None, **kwargs):
     #     context = super(ManufacturerListView, self).get_context_data(**kwargs)
     #
@@ -145,6 +154,14 @@ def remove_habit_from_user(request, pk):
     if user_habit:
         UserHabitDetail.objects.filter(user_habit=user_habit).delete()
 
+    user_habits = UserHabit.objects.filter(user=user).order_by("-date_of_assign")
+    paginator = Paginator(user_habits, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if not page_obj and page_obj.has_previous():
+        return redirect(f"{reverse_lazy("my-habits")}?page={page_obj.previous_page_number}")
+
     return redirect(reverse_lazy("my-habits"))
 
 
@@ -158,11 +175,6 @@ class RegisterView(CreateView):
     template_name = "registration/register.html"
     form_class = CustomUserCreationForm
     success_url = reverse_lazy("login")
-
-    # def form_valid(self, form):
-    #     user = form.save()
-    #     login(self.request, user)
-    #     return super().form_valid(form)
 
 
 @login_required
