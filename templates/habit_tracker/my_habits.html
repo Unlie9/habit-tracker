@@ -15,6 +15,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Days to achieve</th>
+										<th>Date of assign</th>
                     <th>Achieved habit</th>
                     <th class="actions-column">Actions</th>
                 </tr>
@@ -31,6 +32,7 @@
                                 Completed )
                             {% endif %}
                         </td>
+												<td>{{ detail.user_habit.date_of_assign }}</td>
                         <td>{{ detail.achieved_habit_is_true }}</td>
                         <td class="actions-column">
                             <a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-warning btn-sm">Edit</a>
