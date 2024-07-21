@@ -40,7 +40,10 @@
 								</a>
 							</td>
 							<td>{{ detail.skip_day }}</td>
-							<td>{{ detail.days_to_achieve }}</td>
+							<td>
+								{{ detail.days_to_achieve }}
+								<a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-outline-primary btn-sm">Edit</a>
+							</td>
 							<td>
 								<a href="{% url "confirm_operation" detail.id "reset" %}">
 									<img class="action-icon" src="{% static 'assets/reset.png' %}" width="20px" alt="Reset">
@@ -60,5 +63,24 @@
 				<p class="text-warning mt-3">You have visited this page {{ num_visits }} times</p>
 			</div>
 		</div>
+		<ul class="pagination justify-content-center">
+			{% if page_obj.has_previous %}
+				<li class="page-item">
+					<a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span> Prev
+					</a>
+				</li>
+			{% endif %}
+			<li class="page-item active">
+				<span class="page-link">{{ page_obj.number }} of {{ paginator.num_pages }}</span>
+			</li>
+			{% if page_obj.has_next %}
+				<li class="page-item">
+					<a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+						Next <span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			{% endif %}
+		</ul>
 	</main>
 {% endblock %}
