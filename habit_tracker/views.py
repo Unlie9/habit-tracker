@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
@@ -84,7 +85,6 @@ class HabitListView(LoginRequiredMixin, ListView):
 class HabitCreateView(LoginRequiredMixin, CreateView):
     model = Habit
     form_class = HabitForm
-    template_name = "habit_tracker/habit_form.html"
     success_url = reverse_lazy("all-habits")
 
 
@@ -117,7 +117,36 @@ class AssignHabitView(LoginRequiredMixin, FormView):
         return redirect("all-habits")
 
 
-@login_required()
+class UserHabitDetailUpdateView(LoginRequiredMixin, UpdateView):
+    model = UserHabitDetail
+    fields = "__all__"
+    success_url = reverse_lazy("my-habits")
+
+
+class RegisterView(CreateView):
+    template_name = "registration/register.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("login")
+
+    # def form_valid(self, form):
+    #     user = form.save()
+    #     login(self.request, user)
+    #     return super().form_valid(form)
+
+# def register_view(request):
+#     if request.method == "POST":
+#         form = CustomUserCreationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             login(request, user)
+#             return redirect("all-habits")
+#     else:
+#         form = CustomUserCreationForm()
+#
+#     return render(request, "registration/register.html", {"form": form})
+
+
+@login_required
 def my_profile(request):
     user = request.user
     return render(request, "habit_tracker/my_profile.html", {"user": user})
