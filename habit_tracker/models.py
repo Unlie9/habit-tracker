@@ -34,17 +34,17 @@ class UserHabit(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.user} {self.habit.name} {self.date_of_assign}"
+        return f"{self.habit.name} (Date of assign: {self.date_of_assign})"
 
 
 class UserHabitDetail(models.Model):
     user_habit = models.OneToOneField("UserHabit", on_delete=models.CASCADE)
     days_to_achieve = models.IntegerField(default=21, blank=True, null=True, validators=[MinValueValidator(1)])
     skip_day = models.BooleanField(default=False, editable=False, blank=True, null=True)
-    achieved_habit = models.BooleanField(default=False, editable=False, blank=True, null=True)
+    achieved_habit = models.BooleanField(default=False, blank=True, null=True)
 
     class Meta:
-        ordering = ("user_habit__date_of_assign", )
+        ordering = ("-user_habit__date_of_assign", )
 
     def achieved_habit_is_true(self):
         if self.days_to_achieve == 0:
