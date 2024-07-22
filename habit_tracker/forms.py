@@ -91,6 +91,5 @@ class HabitSearchForm(forms.Form):
     )
 
 
-class UserHabitDetailSearchForm(forms.Form):
-    pass
+
 
