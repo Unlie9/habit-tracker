@@ -1,34 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main class="d-flex flex-column align-items-center justify-content-center min-vh-100 py-4 bg-dark text-light">
-    <div class="container" style="max-width: 600px;">
-        <h3 class="text-warning text-center mb-4">
-            {% if form.instance.pk %}
-                Update Habit
-            {% else %}
-                Create New Habit
-            {% endif %}
-        </h3>
-        <form action="" method="post" novalidate class="bg-dark text-light p-4 rounded shadow-sm">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="d-flex justify-content-between mt-4">
-                <a href="{% url 'my-habits' %}" class="btn btn-danger btn-lg px-4 py-2">Cancel</a>
-                <button type="submit" class="btn 
-                    {% if form.instance.pk %}
-                        btn-success
-                    {% else %}
-                        btn-warning
-                    {% endif %} btn-lg px-4 py-2">
-                    {% if form.instance.pk %}
-                        Update
-                    {% else %}
-                        Submit
-                    {% endif %}
-                </button>
-            </div>
-        </form>
-    </div>
-</main>
+	<main class="d-flex flex-column align-items-center justify-content-center min-vh-100 py-4 bg-dark text-light">
+		<div class="container" style="max-width: 600px;">
+			<h3 class="text-warning text-center mb-4">
+				{% if form.instance.pk %}
+					Update Habit
+				{% else %}
+					Create New Habit
+				{% endif %}
+			</h3>
+			<form action="" method="post" novalidate class="bg-dark text-light p-4 rounded shadow-sm">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<div class="d-flex justify-content-between mt-4">
+					<button type="submit" class="btn btn-success btn-lg px-4 py-2">
+						{% if form.instance.pk %}
+							Update
+						{% else %}
+							Confirm
+						{% endif %}
+					</button>
+					<a href="{% url 'my-habits' %}" class="btn btn-danger btn-lg px-4 py-2">Cancel</a>
+				</div>
+			</form>
+		</div>
+	</main>
 {% endblock %}
