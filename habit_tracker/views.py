@@ -181,9 +181,13 @@ def remove_habit_from_user(request, pk):
 
     user_habit = UserHabit.objects.filter(user=user, habit=habit).first()
 
-    if user_habit:
-        UserHabitDetail.objects.filter(user_habit=user_habit).delete()
-        user_habit.delete()
+    with transaction.atomic():
+        if user_habit:
+            UserHabitDetail.objects.filter(user_habit=user_habit).delete()
+            user_habit.delete()
+
+        if habit.name.startswith("(My habit) "):
+            habit.delete()
 
     user_habits = UserHabit.objects.filter(user=user).order_by("-date_of_assign")
     paginator = Paginator(user_habits, 3)
