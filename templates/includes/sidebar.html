@@ -1,36 +1,35 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0 px-5 fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0 px-5 fixed-top shadow-lg">
 	<div class="container-fluid mx-4">
-		<a class="navbar-brand p-0 me-5" href="{% url "index" %}">
-			<img src="/static/assets/logo.png" alt="logo" height="50px">
-		</a>
+		<img src="/static/assets/logo.png" alt="logo" height="50px">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item p-2">
-					<a class="nav-link btn btn-outline-warning" href="{% url "index" %}">Home</a>
+				<li class="nav-item p-2 mx-1">
+					<a class="nav-link btn btn-outline-warning shadow-sm" href="{% url 'index' %}">Home</a>
 				</li>
-				<li class="nav-item p-2">
-
-					<a class="nav-link btn btn-outline-warning" href="{% url "my-profile" %}">My profile</a>
-
+				<li class="nav-item p-2 mx-1">
+					<a class="nav-link btn btn-outline-warning shadow-sm" href="{% url 'my-profile' %}">My Profile</a>
 				</li>
-				<li class="nav-item p-2">
-					<a class="nav-link btn btn-outline-warning" href="{% url "my-habits" %}">My habits details</a>
+				<li class="nav-item p-2 mx-1">
+					<a class="nav-link btn btn-outline-warning shadow-sm" href="{% url 'my-habits' %}">My Habits Details</a>
 				</li>
+			</ul>
+			<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 				{% if user.is_authenticated %}
-					<li class="nav-item p-2">
-						<form method="post" action="{% url "logout" %}">
+					<li class="nav-item p-2 mx-1">
+						<form method="post" action="{% url 'logout' %}">
 							{% csrf_token %}
-							<button type="submit" class="nav-link btn btn-outline-danger">Logout</button>
+							<button type="submit" class="nav-link btn btn-outline-danger shadow-sm">Logout</button>
 						</form>
 					</li>
 				{% else %}
-					<li class="nav-item p-2">
-						<a class="nav-link btn btn-outline-success" href="{% url "login" %}">Login</a>
+					<li class="nav-item p-2 mx-1">
+						<a class="nav-link btn btn-outline-success shadow-sm" href="{% url 'login' %}">Login</a>
 					</li>
 				{% endif %}
 			</ul>
 		</div>
 	</div>
 </nav>
-
-

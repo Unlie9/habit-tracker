@@ -14,7 +14,7 @@
 						 aria-valuemax="100"></div>
 			</div>
 			<div class="table-responsive w-100">
-				<table class="table table-dark table-hover text-light rounded">
+				<table class="table table-dark table-hover text-light rounded shadow">
 					<thead class="thead-light">
 					<tr>
 						<th>Habit Name</th>
@@ -52,7 +52,7 @@
 								{% else %}
 									completed
 								{% endif %}
-								<a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-outline-primary btn-sm">Edit</a>
+								<a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-outline-primary btn-sm ml-2">Edit</a>
 							</td>
 							<td>
 								<a href="{% url "confirm_operation" detail.id "reset" %}">
