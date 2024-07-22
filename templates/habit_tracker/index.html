@@ -2,83 +2,78 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-	{% load static %}
-	<main style="height: 95%" class="d-flex flex-column align-items-center justify-content-center bg-dark text-light">
-		<div class="container py-5">
-			<h3 class="mb-5 text-center">Hi there, <em class="text-warning">{{ user.username }}</em>!</h3>
-			<div class="d-flex justify-content-between align-items-center my-3">
-				<em class="h5">Your Progress</em>
-				<em class="h5">Active habits: {{ num_user_habits }}</em>
-			</div>
-			<div class="progress mb-4" style="height: 0.6rem;">
-				<div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
-						 aria-valuemax="100"></div>
-			</div>
-		<form method="get" action="">
-				<div class="form-group">
-					{{ search_form|crispy }}
-					<button type="submit" class="btn btn-warning col-12 mt-3">🔎 Search</button>
-				</div>
-			</form>
-			<div class="table-responsive w-100">
-				<table class="table table-dark table-hover text-light rounded shadow">
-					<thead class="thead-light">
-					<tr>
-						<th>Habit Name</th>
-						<th>Completed Today</th>
-						<th>Not Completed Today</th>
-						<th>Skip Day</th>
-						<th>Days to Achieve</th>
-						<th>Reset days</th>
-					</tr>
-					</thead>
-					<tbody>
-					{% for detail in user_habit_details %}
-						<tr>
-							<td>{{ detail.user_habit.habit.name }}</td>
-							<td>
-								<a href="{% url "confirm_operation" detail.id "completed" %}">
-									<img class="action-icon" src="{% static 'assets/pur_plus.png' %}" width="20px" alt="Completed">
-								</a>
-							</td>
-							<td>
-								<a href="{% url "confirm_operation" detail.id "not completed" %}">
-									<img class="action-icon" src="{% static 'assets/minus.png' %}" width="20px" alt="Not Completed">
-								</a>
-							</td>
-							<td>
-								{% if detail.skip_day %}
-									Yes
-								{% else %}
-									No
-								{% endif %}
-							</td>
-							<td>
-								{% if detail.days_to_achieve %}
-									{{ detail.days_to_achieve }}
-								{% else %}
-									completed
-								{% endif %}
-								<a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-outline-primary btn-sm ml-2">Edit</a>
-							</td>
-							<td>
-								<a href="{% url "confirm_operation" detail.id "reset" %}">
-									<img class="action-icon" src="{% static 'assets/reset.png' %}" width="20px" alt="Reset">
-								</a>
-							</td>
-						</tr>
-					{% empty %}
-						<tr>
-							<td colspan="6" class="text-center">No habits assigned yet.</td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-			</div>
-			<div class="text-center mt-4">
-				<a class="btn btn-lg btn-warning" href="{% url "all-habits" %}">Add New Habit</a>
-				<p class="text-warning mt-3">You have visited this page {{ num_visits }} times</p>
-			</div>
-		</div>
-	</main>
+  {% load static %}
+  <main class="d-flex flex-column align-items-center justify-content-center bg-dark text-light" style="height: 95%;">
+    <div class="container py-5">
+      <h3 class="mb-5 text-center">Hi there, <em class="text-warning">{{ user.username }}</em>!</h3>
+      <div class="d-flex justify-content-between align-items-center my-3">
+        <em class="h5">Your Progress</em>
+        <em class="h5">Active habits: {{ num_user_habits }}</em>
+      </div>
+      <div class="progress mb-4" style="height: 0.6rem;">
+        <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <form class="form-inline mx-auto mb-4" style="width: 20%;" method="GET">
+        <div class="input-group">
+          <input type="text" class="form-control" name="last_name" placeholder="Search by name" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-warning" type="submit">Search</button>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive w-100">
+        <table class="table table-dark table-hover text-light rounded shadow">
+          <thead>
+            <tr>
+              <th>Habit Name</th>
+              <th>Completed Today</th>
+              <th>Not Completed Today</th>
+              <th>Skip Day</th>
+              <th>Days to Achieve</th>
+              <th>Reset days</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for detail in user_habit_details %}
+              <tr>
+                <td>{{ detail.user_habit.habit.name }}</td>
+                <td>
+                  <a href="{% url 'confirm_operation' detail.id 'completed' %}">
+                    <img class="action-icon" src="{% static 'assets/pur_plus.png' %}" width="20" alt="Completed">
+                  </a>
+                </td>
+                <td>
+                  <a href="{% url 'confirm_operation' detail.id 'not completed' %}">
+                    <img class="action-icon" src="{% static 'assets/minus.png' %}" width="20" alt="Not Completed">
+                  </a>
+                </td>
+                <td>{{ detail.skip_day|yesno:"Yes,No" }}</td>
+                <td>
+                  {% if detail.days_to_achieve %}
+                    {{ detail.days_to_achieve }}
+                  {% else %}
+                    completed
+                  {% endif %}
+                  <a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-outline-primary btn-sm ml-2">Edit</a>
+                </td>
+                <td>
+                  <a href="{% url 'confirm_operation' detail.id 'reset' %}">
+                    <img class="action-icon" src="{% static 'assets/reset.png' %}" width="20" alt="Reset">
+                  </a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="6" class="text-center">No habits assigned yet.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center mt-4">
+        <a class="btn btn-lg btn-warning" href="{% url 'all-habits' %}">Add New Habit</a>
+        <p class="text-warning mt-3">You have visited this page {{ num_visits }} times</p>
+      </div>
+    </div>
+  </main>
 {% endblock %}

@@ -4,9 +4,7 @@
 
 	<main class="log">
 		<div class="d-flex flex-column align-items-center py-5 container-fluid w-25 text-center">
-			<a href="/login">
-				<img class="logo" src="/static/assets/logo.png" alt="logo">
-			</a>
+				<img style="padding: 16px; width: 200px" class="logo" src="/static/assets/logo.png" alt="logo">
 			<form action="{% url 'login' %}" method="post">
 				{% csrf_token %}
 				<div class="input-group mb-3">
@@ -17,7 +15,7 @@
 				</div>
 				<button type="submit" class="btn btn-outline-warning w-100 mb-3">Login</button>
 			</form>
-			<p>Don't have account? Register <a href="{% url 'register' %}">here</a></p>
+			<p style="color: goldenrod">Don't have account? Register <a style="color: white" href="{% url 'register' %}">here</a></p>
 			<a href="https://github.com/Unlie9/habit-tracker" target="_blank">
 				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" class="bi bi-github" fill="gray"
 						 viewBox="0 0 16 16">

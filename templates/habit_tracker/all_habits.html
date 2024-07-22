@@ -9,10 +9,13 @@
 				<a href="{% url 'create-habit' %}" class="btn btn-warning">Create New Habit</a>
 				<a href="{% url "my-habits" %}" class="btn btn-warning">Go to My Habits</a>
 			</div>
-			<form method="get" action="">
-				<div class="form-group">
-					{{ search_form|crispy }}
-					<button type="submit" class="btn btn-warning col-12 mt-3">🔎 Search</button>
+			<form style="margin: auto; width: 20%; padding-bottom: 20px" class="form-inline" method="GET">
+				<div class="input-group">
+					<input type="text" class="form-control" name="last_name" placeholder="Search by name"
+								 aria-label="Search">
+					<div class="input-group-append">
+						<button class="btn btn-warning" type="submit">Search</button>
+					</div>
 				</div>
 			</form>
 			<div class="progress mb-4" style="height: .4rem; background-color: greenyellow;"></div>
