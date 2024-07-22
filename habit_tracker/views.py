@@ -88,7 +88,7 @@ class MyHabitsListView(LoginRequiredMixin, ListView):
 
         num_user_habits = UserHabitDetail.objects.count()
         context["user_habit_details"] = user_habit_details
-        context["num_user_habits"] = num_user_habits - 6
+        context["num_user_habits"] = num_user_habits
         context["search_form"] = search_form
         return context
 
@@ -102,7 +102,7 @@ class HabitListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         assigned_habits = UserHabit.objects.filter(user=user).values_list("habit_id", flat=True)
-        queryset = Habit.objects.exclude(id__in=assigned_habits).order_by("-id")
+        queryset = Habit.objects.exclude(id__in=assigned_habits).order_by("id")
         name_search = self.request.GET.get('name', '')
         if name_search:
             queryset = queryset.filter(name__icontains=name_search)
