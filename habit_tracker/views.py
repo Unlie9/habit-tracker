@@ -73,7 +73,7 @@ class MyHabitsListView(LoginRequiredMixin, ListView):
 
         num_user_habits = UserHabitDetail.objects.count()
         context["user_habit_details"] = user_habit_details
-        context["num_user_habits"] = num_user_habits
+        context["num_user_habits"] = num_user_habits - 6
         context["search_form"] = search_form
         return context
 
@@ -96,7 +96,8 @@ class HabitListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(HabitListView, self).get_context_data(**kwargs)
         user = self.request.user
-        num_habits = Habit.objects.count()
+        assigned_habits = UserHabit.objects.filter(user=user).values_list("habit_id", flat=True)
+        num_habits = Habit.objects.exclude(id__in=assigned_habits).count()
 
         context["user_habits"] = UserHabit.objects.filter(user=user)
         search_form = HabitSearchForm(self.request.GET)
@@ -115,7 +116,6 @@ class HabitCreateView(LoginRequiredMixin, CreateView):
         habit.name = "(global habit) " + habit.name
         habit.save()
 
-        UserHabit.objects.create(user=self.request.user, habit=habit)
         return super().form_valid(form)
 
 
