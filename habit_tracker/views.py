@@ -1,4 +1,5 @@
 from django.contrib.auth import forms
+from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
 
@@ -132,6 +133,25 @@ class HabitCreateView(LoginRequiredMixin, CreateView):
         habit.save()
 
         return super().form_valid(form)
+
+
+class HabitDetailCreateView(LoginRequiredMixin, CreateView):
+    model = Habit
+    form_class = HabitForm
+    success_url = reverse_lazy("my-habits")
+
+    def form_valid(self, form):
+        user = self.request.user
+        with transaction.atomic():
+            habit = form.save(commit=False)
+            habit.name = "(My habit) " + habit.name
+            habit.save()
+            user_habit = UserHabit.objects.create(user=user, habit=habit)
+            user_habit_detail = UserHabitDetail.objects.create(user_habit=user_habit)
+            user_habit.save()
+            user_habit_detail.save()
+
+            return super().form_valid(form)
 
 
 class HabitUpdateView(LoginRequiredMixin, UpdateView):

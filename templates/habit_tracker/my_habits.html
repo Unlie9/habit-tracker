@@ -4,11 +4,11 @@
 {% block content %}
 	<main style="height: 95%" class="d-flex flex-column align-items-center justify-content-center bg-dark text-light">
 		<div class="container py-5">
-			<h3 class="text-light text-center mb-5"><em class="text-warning h3">My Habit List</em></h3>
-			</h3>
+			<h3 class="text-light text-center mb-5"><em class="text-warning h3">My Habit List</em></h3></h3>
+		<em class="text-warning col-md-4">Available habits: {{ num_user_habits }}</em>
 			<div class="d-flex justify-content-between align-items-center my-3">
-				<em class="text-warning col-md-4">Available habits: {{ num_user_habits }}</em>
-				<a href="{% url 'all-habits' %}" class="btn btn-warning">Assign New Habit</a>
+				<a href="{% url "my-habits-create" %}" class="btn btn-warning">Create my habit</a>
+				<a href="{% url 'all-habits' %}" class="btn btn-success">Go to all habits</a>
 			</div>
 			<form style="margin: auto; width: 20%; padding-bottom: 20px" class="form-inline" method="GET">
 				<div class="input-group">

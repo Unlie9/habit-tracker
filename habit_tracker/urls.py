@@ -11,7 +11,7 @@ from habit_tracker.views import (
     assign_habit_to_user,
     RegisterView,
     UserHabitDetailUpdateView,
-    remove_habit_from_user,
+    remove_habit_from_user, HabitDetailCreateView,
 )
 
 urlpatterns = [
@@ -29,6 +29,7 @@ urlpatterns = [
         name="complete_operation"
     ),
     path("my_habits/", MyHabitsListView.as_view(), name="my-habits"),
+    path("my_habits/create_my_habit", HabitDetailCreateView.as_view(), name="my-habits-create"),
     path("my_habits/<int:pk>/edit/", UserHabitDetailUpdateView.as_view(), name="my-habits-update"),
     path("all_habits/", HabitListView.as_view(), name="all-habits"),
     path("all_habits/create_habit/", HabitCreateView.as_view(), name="create-habit"),
