@@ -35,18 +35,33 @@ class IndexView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return UserHabitDetail.objects.filter(user_habit__user=user)
+        queryset = UserHabitDetail.objects.filter(user_habit__user=user)
+
+        search_form = HabitSearchForm(self.request.GET)
+        if search_form.is_valid():
+            name_search = search_form.cleaned_data.get("name")
+            if name_search:
+                queryset = queryset.filter(user_habit__habit__name__icontains=name_search)
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
+        user_habits = UserHabit.objects.filter(user=user)
         num_visits = self.request.session.get("num_visits", 0) + 1
+
+        search_form = HabitSearchForm(self.request.GET)
+        user_habits_details = self.get_queryset()
+
         self.request.session["num_visits"] = num_visits
 
         context["user"] = user
-        context["user_habits"] = UserHabit.objects.filter(user=user)
-        context["num_user_habits"] = self.get_queryset().count()
+        context["user_habits"] = user_habits
+        context["num_user_habits"] = user_habits_details.count()
         context["num_visits"] = num_visits
+        context["search_form"] = search_form
+        context["user_habits_details"] = user_habits_details
 
         return context
 
@@ -63,8 +78,8 @@ class MyHabitsListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(MyHabitsListView, self).get_context_data(**kwargs)
         user_habits = context["user_habits"]
-        search_form = HabitSearchForm(self.request.GET)
         user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
+        search_form = HabitSearchForm(self.request.GET)
 
         if search_form.is_valid():
             name_search = search_form.cleaned_data.get('name')
