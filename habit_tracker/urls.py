@@ -10,7 +10,8 @@ from habit_tracker.views import (
     HabitUpdateView,
     assign_habit_to_user,
     RegisterView,
-    UserHabitDetailUpdateView, remove_habit_from_user,
+    UserHabitDetailUpdateView,
+    remove_habit_from_user,
 )
 
 urlpatterns = [
