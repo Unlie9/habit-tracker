@@ -14,11 +14,23 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          height: 100vh;
+          height: calc(100vh - 80px);
+          padding: 20px;
+          box-sizing: border-box;
       }
 
       table {
           margin: 0 auto;
+      }
+
+      body {
+          overflow: hidden;
+      }
+
+      footer {
+          position: fixed;
+          bottom: 0;
+          width: 100%;
       }
 	</style>
 </head>
@@ -68,7 +80,7 @@
 	{% endblock %}
 </main>
 
-<footer class="bg-dark text-center text-light fixed-bottom p-1">
+<footer class="bg-dark text-center text-light p-1">
 	&copy; 2024 Unlie9
 </footer>
 </body>
