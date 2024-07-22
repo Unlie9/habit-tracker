@@ -10,28 +10,42 @@
 	{% load static %}
 	<link rel="stylesheet" href="{% static 'styles.css' %}">
 	<style>
-      .center-table {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: calc(100vh - 80px);
-          padding: 20px;
-          box-sizing: border-box;
-      }
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			overflow: hidden; /* Предотвращает прокрутку страницы */
+		}
 
-      table {
-          margin: 0 auto;
-      }
+		body {
+			background-color: #888888; /* Серый фон для всей страницы */
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
 
-      body {
-          overflow: hidden;
-      }
+		.main-content {
+			background-color: #2e2e2e; /* Темный фон для основной области контента */
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+			margin: 0 auto; /* Убираем отступы */
+			width: calc(100% - 40px); /* Учитываем отступы */
+			max-width: 1200px;
+			height: calc(100vh - 40px); /* Высота контента с учетом футера */
+			overflow-y: auto; /* Позволяет прокручивать содержимое внутри контейнера */
+			box-sizing: border-box;
+		}
 
-      footer {
-          position: fixed;
-          bottom: 0;
-          width: 100%;
-      }
+		footer {
+			width: 100%;
+			background-color: #343a40;
+			color: #ffffff;
+			padding: 10px;
+			text-align: center;
+			margin-top: auto; /* Прижимает футер к низу */
+		}
 	</style>
 </head>
 <body>
@@ -41,7 +55,7 @@
 	{% endblock %}
 {% endif %}
 
-<main class="center-table">
+<main class="main-content">
 	{% block content %}
 		<div class="table-responsive">
 			<table class="table table-dark table-bordered">
