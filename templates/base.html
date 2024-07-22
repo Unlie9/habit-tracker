@@ -1,75 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	{% block title %}<title>Habit-Tracker</title>{% endblock %}
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-				integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-	{% load static %}
-	<link rel="stylesheet" href="{% static 'styles.css' %}">
-	<style>
-      .center-table {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-      }
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% block title %}<title>Habit-Tracker</title>{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        .center-table {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-      table {
-          margin: 0 auto;
-      }
-	</style>
+        table {
+            margin: 0 auto;
+        }
+
+        body {
+            background-color: #f8f9fa; /* Светло-серый фон */
+        }
+
+        .main-content {
+            background-color: #e9ecef; /* Серый фон для основного содержимого */
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
 {% if not request.path == "/accounts/login/" and not request.path == "/register/" %}
-	{% block sidebar %}
-		{% include "includes/sidebar.html" %}
-	{% endblock %}
+    {% block sidebar %}
+        {% include "includes/sidebar.html" %}
+    {% endblock %}
 {% endif %}
 
-<main class="center-table">
-	{% block content %}
-		<div class="table-responsive">
-			<table class="table table-dark table-bordered">
-				<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">First</th>
-					<th scope="col">Last</th>
-					<th scope="col">Handle</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr>
-				<tr>
-					<th scope="row">2</th>
-					<td>Jacob</td>
-					<td>Thornton</td>
-					<td>@fat</td>
-				</tr>
-				<tr>
-					<th scope="row">3</th>
-					<td colspan="2">Larry the Bird</td>
-					<td>@twitter</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
-	{% endblock %}
-	{% block pagination %}
-		{% include "includes/pagination.html" %}
-	{% endblock %}
+<main class="container my-5 main-content">
+    {% block content %}
+        <div class="table-responsive">
+            <table class="table table-dark table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+    {% block pagination %}
+        {% include "includes/pagination.html" %}
+    {% endblock %}
 </main>
 
 <footer class="bg-dark text-center text-light fixed-bottom p-1">
-	&copy; 2024 Unlie9
+    &copy; 2024 Unlie9
 </footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlB06moHlc6bPpTB6vKvH4czirT5r5v6bV6dIpqYJzQJ+47Kc5b4v8QbsK3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+0pkePd2SNwflJrWz7GC2B7A95ldgWqUUxBByCXK4e3CkFIDyP5aA3dk6" crossorigin="anonymous"></script>
 </body>
 </html>
