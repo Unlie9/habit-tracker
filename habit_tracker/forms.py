@@ -39,7 +39,7 @@ class CustomUserCreationForm(UserCreationForm):
 class HabitForm(forms.ModelForm):
     description = forms.CharField(
         widget=forms.Textarea(
-            attrs={"rows": 2, "cols": 30}
+            attrs={"rows": 2, "cols": 19}
         )
     )
 

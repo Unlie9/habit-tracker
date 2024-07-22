@@ -8,3 +8,7 @@
     color: #000;
 }
 
+form label {
+    min-width: 100px;
+    margin: 0;
+}
