@@ -39,9 +39,19 @@
 									<img class="action-icon" src="{% static 'assets/minus.png' %}" width="20px" alt="Not Completed">
 								</a>
 							</td>
-							<td>{{ detail.skip_day }}</td>
 							<td>
-								{{ detail.days_to_achieve }}
+								{% if detail.skip_day %}
+									Yes
+								{% else %}
+									No
+								{% endif %}
+							</td>
+							<td>
+								{% if detail.days_to_achieve %}
+									{{ detail.days_to_achieve }}
+								{% else %}
+									completed
+								{% endif %}
 								<a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-outline-primary btn-sm">Edit</a>
 							</td>
 							<td>

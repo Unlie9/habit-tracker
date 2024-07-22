@@ -202,11 +202,14 @@ def complete_operation(request, detail_id, operation):
     detail = get_object_or_404(UserHabitDetail, id=detail_id)
 
     if detail.user_habit.user == request.user:
-        if operation == "completed":
-            detail.days_to_achieve -= 1
-            detail.skip_day = False
-        elif operation == "not completed":
-            detail.skip_day = True
+        if not detail.days_to_achieve == 0:
+            if operation == "completed":
+                detail.days_to_achieve -= 1
+                detail.skip_day = False
+
+            elif operation == "not completed":
+                detail.skip_day = True
+
         elif operation == "reset":
             detail.days_to_achieve = 21
             detail.skip_day = False
