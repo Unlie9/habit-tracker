@@ -25,11 +25,13 @@
 				<tbody>
 				{% for habit in habits_list %}
 					<tr>
+					{% if habit not in user_habits %}
 						<td>{{ habit.name }}</td>
 						<td>{{ habit.description }}</td>
 						<td class="actions-column">
 							<a href="{% url "assign-habit" habit.pk %}" class="btn btn-primary btn-sm">Assign</a>
 						</td>
+					{% endif %}
 					</tr>
 				{% empty %}
 					<tr>

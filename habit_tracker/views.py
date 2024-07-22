@@ -85,7 +85,9 @@ class HabitListView(LoginRequiredMixin, ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        queryset = Habit.objects.all().order_by("-id")
+        user = self.request.user
+        assigned_habits = UserHabit.objects.filter(user=user).values_list("habit_id", flat=True)
+        queryset = Habit.objects.exclude(id__in=assigned_habits).order_by("-id")
         name_search = self.request.GET.get('name', '')
         if name_search:
             queryset = queryset.filter(name__icontains=name_search)
@@ -93,10 +95,11 @@ class HabitListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(HabitListView, self).get_context_data(**kwargs)
-        habits = context["habits_list"]
+        user = self.request.user
         num_habits = Habit.objects.count()
+
+        context["user_habits"] = UserHabit.objects.filter(user=user)
         search_form = HabitSearchForm(self.request.GET)
-        context["habits"] = habits
         context["num_habits"] = num_habits
         context["search_form"] = search_form
         return context
@@ -108,7 +111,10 @@ class HabitCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("all-habits")
 
     def form_valid(self, form):
-        habit = form.save()
+        habit = form.save(commit=False)
+        habit.name = "(global habit) " + habit.name
+        habit.save()
+
         UserHabit.objects.create(user=self.request.user, habit=habit)
         return super().form_valid(form)
 
