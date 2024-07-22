@@ -1,3 +1,4 @@
+from django.contrib.auth import forms
 from django.db.models import Q
 from django.utils import timezone
 
@@ -162,6 +163,13 @@ class UserHabitDetailUpdateView(LoginRequiredMixin, UpdateView):
     model = UserHabitDetail
     fields = ["days_to_achieve"]
     success_url = reverse_lazy("index")
+
+    def form_valid(self, form):
+        if form.instance.days_to_achieve < 1:
+            form.add_error("days_to_achieve", forms.ValidationError("Days to achieve cannot be less than 1"))
+            return self.form_invalid(form)
+
+        return super().form_valid(form)
 
 
 class RegisterView(CreateView):

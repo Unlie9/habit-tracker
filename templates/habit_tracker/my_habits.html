@@ -32,10 +32,10 @@
 						<td>{{ detail.user_habit.habit.name }}</td>
 						<td>{{ detail.user_habit.habit.description }}</td>
 						<td>
-							{% if detail.days_to_achieve %}
+							{% if detail.days_to_achieve > 0 %}
 								{{ detail.days_to_achieve }}
 							{% else %}
-								Completed )
+								Completed
 							{% endif %}
 						</td>
 						<td>{{ detail.user_habit.date_of_assign }}</td>

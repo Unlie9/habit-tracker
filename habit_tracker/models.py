@@ -47,7 +47,7 @@ class UserHabitDetail(models.Model):
         ordering = ("-user_habit__date_of_assign", )
 
     def achieved_habit_is_true(self):
-        if self.days_to_achieve == 0:
+        if self.days_to_achieve < 1:
             return "Yes"
         else:
             return "No"
