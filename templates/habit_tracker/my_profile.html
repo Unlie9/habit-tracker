@@ -1,19 +1,30 @@
 {% extends "base.html" %}
 
 {% block title %}
-    <title>Profile page</title>
+    <title>Profile Page</title>
 {% endblock %}
 
 {% block content %}
     <div class="container mt-5">
-        <div class="card mx-auto" style="max-width: 600px; background-color: #f8f9fa;">
+        <div class="card mx-auto shadow-lg" style="max-width: 600px; background-color: #ffffff; border-radius: 15px;">
             <div class="card-body">
-                <h1 class="card-title text-center" style="color: #343a40;">My Profile</h1>
+                <h1 class="card-title text-center mb-4" style="color: #343a40; font-size: 2.5rem;">My Profile</h1>
                 <div class="profile-info mt-4">
-                    <p class="card-text" style="color: black;"><strong>Username:</strong> {{ user.username }}</p>
-                    <p class="card-text" style="color: black;"><strong>Email:</strong> {{ user.email }}</p>
-                    <p class="card-text" style="color: black;"><strong>First name:</strong> {{ user.first_name }}</p>
-										<p class="card-text" style="color: black;"><strong>Last name:</strong> {{ user.last_name }}</p>
+                    <p class="card-text" style="color: #495057; font-size: 1.25rem;">
+                        <strong>Username:</strong> {{ user.username }}
+                    </p>
+                    <p class="card-text" style="color: #495057; font-size: 1.25rem;">
+                        <strong>Email:</strong> {{ user.email }}
+                    </p>
+                    <p class="card-text" style="color: #495057; font-size: 1.25rem;">
+                        <strong>First name:</strong> {{ user.first_name }}
+                    </p>
+                    <p class="card-text" style="color: #495057; font-size: 1.25rem;">
+                        <strong>Last name:</strong> {{ user.last_name }}
+                    </p>
+                </div>
+                <div class="text-center mt-5">
+                    <a href="#" class="btn btn-primary btn-lg" style="border-radius: 25px; padding: 10px 20px;">Edit Profile</a>
                 </div>
             </div>
         </div>
