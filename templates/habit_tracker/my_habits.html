@@ -1,14 +1,19 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
 	<main class="d-flex flex-column align-items-center justify-content-center vh-100">
 		<div class="container">
 			<h3 class="text-light p-0 mb-5"><em class="text-warning h3">My habit list</em></h3>
-			<h3 class="text-light p-0 mb-5"><em class="text-warning h3">Active habits: {{ num_user_habits }}</em></h3>
+			<h3 class="text-light p-0 mb-5"><em class="text-warning h3">Available habits: {{ num_user_habits }}</em></h3>
 			<div class="d-flex justify-content-between align-items-center my-3">
 				<em style="color: yellow">Information</em>
 				<a href="{% url 'all-habits' %}" class="btn btn-warning float-right">Assign new habit</a>
 			</div>
+			<form method="get" action="">
+				{{ search_form|crispy }}
+				<input class="col-xl-12" type="submit" value="🔎">
+			</form>
 			<div class="progress" style="height: .4rem; background-color: aqua;"></div>
 			<table class="table text-light my-4">
 				<thead>
@@ -37,7 +42,8 @@
 						<td>{{ detail.achieved_habit_is_true }}</td>
 						<td class="actions-column">
 							<a href="{% url "update-habit" detail.user_habit.habit.pk %}" class="btn btn-primary btn-sm">Edit</a>
-							<a href="{% url "remove-habit" detail.user_habit.habit.pk %}" class="btn btn-danger btn-sm">Remove from my list</a>
+							<a href="{% url "remove-habit" detail.user_habit.habit.pk %}" class="btn btn-danger btn-sm">Remove from my
+								list</a>
 						</td>
 					</tr>
 				{% empty %}

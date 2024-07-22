@@ -54,44 +54,30 @@ def index(request):
     return render(request, "habit_tracker/index.html", context=context)
 
 
-# @login_required
-# def my_habits(request):
-#     if not request.user.is_authenticated:
-#         return redirect('login')
-#
-#     user = request.user
-#     user_habits = UserHabit.objects.filter(user=user)
-#     user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
-#
-#     context = {
-#         "user": user,
-#         "user_habits": user_habits,
-#         "user_habit_details": user_habit_details,
-#     }
-#
-#     return render(request, "habit_tracker/my_habits.html", context=context)
-
-
 class MyHabitsListView(LoginRequiredMixin, ListView):
     template_name = "habit_tracker/my_habits.html"
     context_object_name = "user_habits"
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = UserHabit.objects.filter(user=self.request.user).order_by("-date_of_assign")
-        name_search = self.request.GET.get("name")
-        if name_search:
-            queryset = queryset.filter(name__icontains=name_search)
+        queryset = UserHabit.objects.filter(user=self.request.user).order_by("-id")
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super(MyHabitsListView, self).get_context_data(**kwargs)
         user_habits = context["user_habits"]
+        search_form = HabitSearchForm(self.request.GET)
         user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
-        num_user_habits = UserHabitDetail.objects.filter(user_habit__user=self.request.user).count()
+
+        if search_form.is_valid():
+            name_search = search_form.cleaned_data.get('name')
+            if name_search:
+                user_habit_details = user_habit_details.filter(user_habit__habit__name__icontains=name_search)
+
+        num_user_habits = user_habit_details.count()
         context["user_habit_details"] = user_habit_details
         context["num_user_habits"] = num_user_habits
-        context["search_form"] = HabitSearchForm(self.request.GET)
+        context["search_form"] = search_form
         return context
 
 
@@ -112,9 +98,10 @@ class HabitListView(LoginRequiredMixin, ListView):
         context = super(HabitListView, self).get_context_data(**kwargs)
         habits = context["habits_list"]
         num_habits = Habit.objects.count()
+        search_form = HabitSearchForm(self.request.GET)
         context["habits"] = habits
         context["num_habits"] = num_habits
-        context["search_form"] = HabitSearchForm(self.request.GET)
+        context["search_form"] = search_form
         return context
 
 
