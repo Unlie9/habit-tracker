@@ -1,6 +1,6 @@
 from django.urls import path, include
 from habit_tracker.views import (
-    index,
+    IndexView,
     my_profile,
     MyHabitsListView,
     confirm_operation,
@@ -15,7 +15,7 @@ from habit_tracker.views import (
 )
 
 urlpatterns = [
-    path("", index, name="index"),
+    path("", IndexView.as_view(), name="index"),
     path("accounts/", include("django.contrib.auth.urls")),
     path('register/', RegisterView.as_view(), name='register'),
     path(

@@ -27,38 +27,34 @@ from django.views.generic import (
 )
 
 
-@login_required
-def index(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
+class IndexView(LoginRequiredMixin, ListView):
+    model = UserHabitDetail
+    template_name = 'habit_tracker/index.html'
+    context_object_name = 'user_habit_details'
+    paginate_by = 4
 
-    user = request.user
-    user_habits = UserHabit.objects.filter(user=user)
-    user_habit_details = UserHabitDetail.objects.filter(user_habit__in=user_habits)
-    num_user_habits = UserHabitDetail.objects.filter(user_habit__user=user).count()
-    num_visits = request.session.get("num_visits", 0)
-    request.session["num_visits"] = num_visits + 1
+    def get_queryset(self):
+        user = self.request.user
+        return UserHabitDetail.objects.filter(user_habit__user=user)
 
-    paginator = Paginator(user_habit_details, 3)
-    page_number = request.GET.get('page')
-    page = paginator.get_page(page_number)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        num_visits = self.request.session.get("num_visits", 0) + 1
+        self.request.session["num_visits"] = num_visits
 
-    context = {
-        "user": user,
-        "user_habits": user_habits,
-        "user_habit_details": user_habit_details,
-        "num_user_habits": num_user_habits,
-        "num_visits": num_visits + 1,
-        "page": page,
-    }
+        context["user"] = user
+        context["user_habits"] = UserHabit.objects.filter(user=user)
+        context["num_user_habits"] = self.get_queryset().count()
+        context["num_visits"] = num_visits
 
-    return render(request, "habit_tracker/index.html", context=context)
+        return context
 
 
 class MyHabitsListView(LoginRequiredMixin, ListView):
     template_name = "habit_tracker/my_habits.html"
     context_object_name = "user_habits"
-    paginate_by = 5
+    paginate_by = 4
 
     def get_queryset(self):
         queryset = UserHabit.objects.filter(user=self.request.user).order_by("-id")
@@ -75,7 +71,7 @@ class MyHabitsListView(LoginRequiredMixin, ListView):
             if name_search:
                 user_habit_details = user_habit_details.filter(user_habit__habit__name__icontains=name_search)
 
-        num_user_habits = user_habit_details.count()
+        num_user_habits = UserHabitDetail.objects.count()
         context["user_habit_details"] = user_habit_details
         context["num_user_habits"] = num_user_habits
         context["search_form"] = search_form
@@ -86,7 +82,7 @@ class HabitListView(LoginRequiredMixin, ListView):
     model = Habit
     context_object_name = "habits_list"
     template_name = "habit_tracker/all_habits.html"
-    paginate_by = 5
+    paginate_by = 4
 
     def get_queryset(self):
         queryset = Habit.objects.all().order_by("-id")
@@ -131,7 +127,6 @@ def assign_habit_to_user(request, pk):
 
     user_habit, created = UserHabit.objects.get_or_create(user=user, habit=habit)
     if created:
-        user_habit.date_of_assign = timezone.now()
         user_habit.save()
         UserHabitDetail.objects.create(user_habit=user_habit)
 
@@ -147,6 +142,7 @@ def remove_habit_from_user(request, pk):
 
     if user_habit:
         UserHabitDetail.objects.filter(user_habit=user_habit).delete()
+        user_habit.delete()
 
     user_habits = UserHabit.objects.filter(user=user).order_by("-date_of_assign")
     paginator = Paginator(user_habits, 3)
