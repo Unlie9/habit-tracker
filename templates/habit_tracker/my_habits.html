@@ -10,9 +10,9 @@
 				<a href="{% url "my-habits-create" %}" class="btn btn-warning">Create my habit</a>
 				<a href="{% url 'all-habits' %}" class="btn btn-success">Go to all habits</a>
 			</div>
-			<form style="margin: auto; width: 20%; padding-bottom: 20px" class="form-inline" method="GET">
+			<form style="margin: auto; width: 20%; padding-bottom: 20px" class="form-inline" method="get" action="">
 				<div class="input-group">
-					<input type="text" class="form-control" name="last_name" placeholder="Search by name"
+					<input type="text" class="form-control" name="name" placeholder="Search by name"
 								 aria-label="Search">
 					<div class="input-group-append">
 						<button class="btn btn-warning" type="submit">Search</button>
