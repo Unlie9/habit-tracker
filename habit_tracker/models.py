@@ -18,6 +18,8 @@ class Habit(models.Model):
 
     class Meta:
         ordering = ("name", )
+        verbose_name = "habit"
+        verbose_name_plural = "habits"
 
     def __str__(self):
         return f"{self.name} {self.description}"
@@ -33,6 +35,10 @@ class UserHabit(models.Model):
             self.date_of_assign = timezone.now()
         super().save(*args, **kwargs)
 
+        class Meta:
+            verbose_name = "User-Habit"
+            verbose_name_plural = "User-Habits"
+
     def __str__(self):
         return f"{self.habit.name} (Date of assign: {self.date_of_assign})"
 
@@ -45,9 +51,15 @@ class UserHabitDetail(models.Model):
 
     class Meta:
         ordering = ("-user_habit__date_of_assign", )
+        verbose_name = "User-Habit Detail"
+        verbose_name_plural = "User-Habit Details"
 
     def achieved_habit_is_true(self):
         if self.days_to_achieve < 1:
             return "Yes"
         else:
             return "No"
+
+    def __str__(self):
+        return (f"{self.user_habit.habit.name} (Days to achieve: {self.days_to_achieve})"
+                f"(Achieved habit: {self.achieved_habit_is_true()})")
