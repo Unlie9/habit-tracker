@@ -56,17 +56,17 @@ class HabitForm(forms.ModelForm):
         if not name or not description:
             return cleaned_data
 
-        if not re.fullmatch(r'[a-zA-Z\s]+', name):
-            errors['name'] = "Name must contain only letters and spaces."
+        if not re.fullmatch(r'[a-zA-Z\s\(\)]+', name):
+            errors['name'] = "Name must contain only letters, spaces, and parentheses."
 
         if not re.fullmatch(r'[a-zA-Z0-9\s]+', description):
             errors['description'] = "Description must contain only alphanumeric characters and spaces."
 
-        if len(name) > 16:
-            errors['name'] = "Name must be less than 16 characters."
+        if len(name) > 28:
+            errors['name'] = "Name must be less than 28 characters."
 
-        if len(description) > 40:
-            errors['description'] = "Description must be less than 40 characters."
+        if len(description) > 30:
+            errors['description'] = "Description must be less than 30 characters."
 
         if errors:
             raise ValidationError(errors)
