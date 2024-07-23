@@ -7,8 +7,8 @@
 			<h3 class="text-light text-center mb-5"><em class="text-warning h3">My Habit List</em></h3></h3>
 		<em class="text-warning col-md-4">Available habits: {{ num_user_habits }}</em>
 			<div class="d-flex justify-content-between align-items-center my-3">
-				<a href="{% url "my-habits-create" %}" class="btn btn-warning">Create my habit</a>
-				<a href="{% url 'all-habits' %}" class="btn btn-success">Go to all habits</a>
+				<a href="{% url "my-habits-create" %}" class="btn btn-outline-warning">Create my habit</a>
+				<a href="{% url 'all-habits' %}" class="btn btn-outline-warning">Go to all habits</a>
 			</div>
 			<form style="margin: auto; width: 20%; padding-bottom: 20px" class="form-inline" method="get" action="">
 				<div class="input-group">
@@ -29,7 +29,8 @@
 						<th>Days to Achieve</th>
 						<th>Date of Assign</th>
 						<th>Achieved Habit</th>
-						<th class="actions-column">Actions</th>
+						<th class="actions-column">Edit</th>
+						<th class="actions-column">Remove from list</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -46,9 +47,11 @@
 							</td>
 							<td>{{ detail.user_habit.date_of_assign }}</td>
 							<td>{{ detail.achieved_habit_is_true }}</td>
-							<td class="actions-column">
-								<a href="{% url "update-habit" detail.user_habit.habit.pk %}" class="btn btn-primary btn-sm">Edit</a>
-								<a href="{% url "remove-habit" detail.user_habit.habit.pk %}" class="btn btn-danger btn-sm">Remove</a>
+							<td style="padding-right: 20px" class="actions-column">
+								<a href="{% url "update-habit" detail.user_habit.habit.pk %}" class="btn btn-outline-primary btn-sm">Edit</a>
+							</td>
+							<td style="padding-left: 40px">
+								<a href="{% url "remove-habit" detail.user_habit.habit.pk %}" class="btn btn-outline-danger btn-sm">Remove</a>
 							</td>
 						</tr>
 					{% empty %}

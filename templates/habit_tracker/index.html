@@ -31,6 +31,7 @@
 						<th>Not Completed Today</th>
 						<th>Skip Day</th>
 						<th>Days to Achieve</th>
+						<th>Edit days</th>
 						<th>Reset days</th>
 					</tr>
 					</thead>
@@ -38,28 +39,32 @@
 					{% for detail in user_habit_details %}
 						<tr>
 							<td>{{ detail.user_habit.habit.name }}</td>
-							<td>
+							<td style="padding-left: 50px">
 								<a href="{% url 'confirm_operation' detail.id 'completed' %}">
-									<img class="action-icon" src="{% static 'assets/pur_plus.png' %}" width="20" alt="Completed">
+									<img class="action-icon" src="{% static 'assets/pur_plus.png' %}" width="30" alt="Completed">
 								</a>
 							</td>
-							<td>
+							<td style="padding-left: 70px">
 								<a href="{% url 'confirm_operation' detail.id 'not completed' %}">
-									<img class="action-icon" src="{% static 'assets/minus.png' %}" width="20" alt="Not Completed">
+									<img class="action-icon" src="{% static 'assets/minus.png' %}" width="30" alt="Not Completed">
 								</a>
 							</td>
-							<td>{{ detail.skip_day|yesno:"Yes,No" }}</td>
-							<td>
+							<td style="padding-left: 25px">
+								{{ detail.skip_day|yesno:"Yes,No" }}
+							</td>
+							<td style="padding-left: 55px">
 								{% if detail.days_to_achieve %}
 									{{ detail.days_to_achieve }}
 								{% else %}
 									completed
 								{% endif %}
+							</td>
+							<td>
 								<a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-outline-primary btn-sm ml-2">Edit</a>
 							</td>
 							<td>
 								<a href="{% url 'confirm_operation' detail.id 'reset' %}">
-									<img class="action-icon" src="{% static 'assets/reset.png' %}" width="30" alt="Reset">
+									<img class="action-icon" src="{% static 'assets/reset.png' %}" width="35" alt="Reset">
 								</a>
 							</td>
 						</tr>
@@ -71,7 +76,8 @@
 					</tbody>
 				</table>
 			</div>
-			<a class="text-center btn btn-lg btn-warning" href="{% url 'all-habits' %}">Add New Habit</a>
+			<a class="text-center btn btn-lg btn-outline-warning" href="{% url 'all-habits' %}">Watch Global habits</a>
+			<a class="text-center btn btn-lg btn-outline-warning" href="{% url 'all-habits' %}">Watch My Habits details</a>
 			<p style="" class="text-warning mt-3">You have visited this page {{ num_visits }} times</p>
 		</div>
 	</main>
