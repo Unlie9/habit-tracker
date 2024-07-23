@@ -85,9 +85,12 @@ class MyHabitsListView(LoginRequiredMixin, ListView):
             if name_search:
                 user_habit_details = user_habit_details.filter(user_habit__habit__name__icontains=name_search)
 
-        num_user_habits = UserHabitDetail.objects.count()
         context["user_habit_details"] = user_habit_details
-        context["num_user_habits"] = num_user_habits
+        context["num_user_habits"] = UserHabitDetail.objects.filter(
+            user_habit__in=UserHabit.objects.filter(
+                user=self.request.user
+            )
+        ).count()
         context["search_form"] = search_form
         return context
 
