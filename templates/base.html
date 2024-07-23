@@ -49,7 +49,7 @@
     </style>
 </head>
 <body>
-{% if not request.path == "/accounts/login/" and not request.path == "/register/" %}
+{% if not request.path == "/accounts/login/" and not request.path == "/accounts/register/" %}
     {% block sidebar %}
         {% include "includes/sidebar.html" %}
     {% endblock %}
