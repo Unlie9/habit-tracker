@@ -15,6 +15,9 @@
 				<li class="nav-item p-2 mx-1">
 					<a class="btn btn-outline-warning shadow-sm" href="{% url 'my-habits' %}">My Habits Details</a>
 				</li>
+				<li class="nav-item p-2 mx-1">
+					<a class="btn btn-outline-warning shadow-sm" href="{% url 'all-habits' %}">Global habits</a>
+				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
 				{% if user.is_authenticated %}
