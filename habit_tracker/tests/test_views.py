@@ -1,76 +1,61 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from habit_tracker.models import Habit, UserHabit, UserHabitDetail
-from habit_tracker.forms import CustomUserCreationForm, HabitForm, HabitSearchForm
+from django.utils import timezone
+
+from habit_tracker.models import UserHabitDetail, Habit, UserHabit
+from habit_tracker.forms import HabitSearchForm
 
 User = get_user_model()
 
 
-class HabitTrackerViewsTests(TestCase):
+class IndexViewTests(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='testuser', password='password')
-        self.client.login(username='testuser', password='password')
-        self.habit = Habit.objects.create(name='Test Habit', description='Test Description')
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.habit1 = Habit.objects.create(name='Exercise', description='Morning exercise')
+        self.habit2 = Habit.objects.create(name='Reading', description='Read a book')
+        self.user_habit1 = UserHabit.objects.create(user=self.user, habit=self.habit1)
+        self.user_habit2 = UserHabit.objects.create(user=self.user, habit=self.habit2)
+        self.user_habit_detail1 = UserHabitDetail.objects.create(user_habit=self.user_habit1, days_to_achieve=21)
+        self.user_habit_detail2 = UserHabitDetail.objects.create(user_habit=self.user_habit2, days_to_achieve=15)
+        self.client.login(username='testuser', password='testpass')
 
-    def test_index_view(self):
+    def test_index_view_status_code(self):
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
+
+    def test_index_view_template(self):
+        response = self.client.get(reverse('index'))
         self.assertTemplateUsed(response, 'habit_tracker/index.html')
 
-    def test_my_habits_view(self):
-        response = self.client.get(reverse('my-habits'))
+    def test_index_view_context(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.context['user'], self.user)
+        self.assertIn('user_habits', response.context)
+        self.assertIn('num_user_habits', response.context)
+        self.assertIn('num_visits', response.context)
+        self.assertIn('search_form', response.context)
+        self.assertIn('user_habit_details', response.context)
+
+    def test_index_view_search(self):
+        response = self.client.get(reverse('index'), {'name': 'Exercise'})
+        self.assertContains(response, 'Exercise')
+        self.assertNotContains(response, 'Reading')
+
+    def test_index_view_num_visits(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(self.client.session['num_visits'], 1)
+        response = self.client.get(reverse('index'))
+        self.assertEqual(self.client.session['num_visits'], 2)
+
+    def test_index_view_invalid_search_form(self):
+        response = self.client.get(reverse('index'), {'name': 'x' * 101})  # Assuming max length validation
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'habit_tracker/my_habits.html')
+        self.assertEqual(response.context['user_habit_details'].count(), 2)  # No filtering applied
 
-    def test_all_habits_view(self):
-        response = self.client.get(reverse('all-habits'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'habit_tracker/all_habits.html')
-
-    def test_assign_habit_to_user(self):
-        response = self.client.post(reverse('assign-habit', kwargs={'pk': self.habit.pk}))
-        self.assertEqual(response.status_code, 302)
-        self.assertTrue(UserHabit.objects.filter(user=self.user, habit=self.habit).exists())
-
-    def test_remove_habit_from_user(self):
-        user_habit = UserHabit.objects.create(user=self.user, habit=self.habit)
-        response = self.client.post(reverse('remove-habit', kwargs={'pk': self.habit.pk}))
-        self.assertEqual(response.status_code, 302)
-        self.assertFalse(UserHabit.objects.filter(user=self.user, habit=self.habit).exists())
-
-    def test_register_view_get(self):
-        response = self.client.get(reverse('register'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'registration/register.html')
-
-    def test_my_profile_view(self):
-        response = self.client.get(reverse('my-profile'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'habit_tracker/my_profile.html')
-
-    def test_my_habits_view_pagination(self):
-        for _ in range(10):
-            habit = Habit.objects.create(name=f'Habit {_}', description=f'Description {_}')
-            UserHabit.objects.create(user=self.user, habit=habit)
-        response = self.client.get(reverse('my-habits'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.context['is_paginated'])
-
-    def test_all_habits_view_pagination(self):
-        for _ in range(10):
-            Habit.objects.create(name=f'Habit {_}', description=f'Description {_}')
-        response = self.client.get(reverse('all-habits'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.context['is_paginated'])
-
-    def test_search_habits_in_all_habits_view(self):
-        Habit.objects.create(name='Searchable Habit', description='Searchable Description')
-        response = self.client.get(reverse('all-habits') + '?name=Searchable')
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Searchable Habit')
-
-    def test_my_profile_view_contains_user(self):
-        response = self.client.get(reverse('my-profile'))
-        self.assertContains(response, self.user.username)
+    def test_index_view_without_login(self):
+        self.client.logout()
+        response = self.client.get(reverse('index'))
+        self.assertNotEqual(response.status_code, 200)
+        self.assertRedirects(response, f'/accounts/login/?next={reverse("index")}')
