@@ -1,7 +1,12 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from habit_tracker.models import Habit, UserHabit, UserHabitDetail
+
+from habit_tracker.models import (
+    Habit,
+    UserHabit,
+    UserHabitDetail
+)
 
 User = get_user_model()
 client = Client()

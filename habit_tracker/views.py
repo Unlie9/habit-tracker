@@ -1,26 +1,24 @@
 from django.contrib.auth import forms
 from django.db import transaction
-from django.db.models import Q
-from django.utils import timezone
-
 from django.contrib.auth.decorators import login_required
-
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from django.core.paginator import Paginator
-
-from django.shortcuts import render, redirect, get_object_or_404
-
 from django.urls import reverse_lazy
-
-from habit_tracker.forms import CustomUserCreationForm, HabitForm, HabitSearchForm
-
+from django.shortcuts import (
+    render,
+    redirect,
+    get_object_or_404
+)
+from habit_tracker.forms import (
+    CustomUserCreationForm,
+    HabitForm,
+    HabitSearchForm
+)
 from habit_tracker.models import (
     Habit,
     UserHabitDetail,
     UserHabit
 )
-
 from django.views.generic import (
     ListView,
     UpdateView,
@@ -32,7 +30,7 @@ class IndexView(LoginRequiredMixin, ListView):
     model = UserHabitDetail
     template_name = 'habit_tracker/index.html'
     context_object_name = 'user_habit_details'
-    paginate_by = 4
+    paginate_by = 3
 
     def get_queryset(self):
         user = self.request.user
@@ -70,7 +68,7 @@ class IndexView(LoginRequiredMixin, ListView):
 class MyHabitsListView(LoginRequiredMixin, ListView):
     template_name = "habit_tracker/my_habits.html"
     context_object_name = "user_habits"
-    paginate_by = 4
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = UserHabit.objects.filter(user=self.request.user).order_by("-id")
@@ -98,7 +96,7 @@ class HabitListView(LoginRequiredMixin, ListView):
     model = Habit
     context_object_name = "habits_list"
     template_name = "habit_tracker/all_habits.html"
-    paginate_by = 4
+    paginate_by = 3
 
     def get_queryset(self):
         user = self.request.user
