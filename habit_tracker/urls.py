@@ -1,4 +1,6 @@
 from django.urls import path, include
+from django.contrib import admin
+
 from habit_tracker.views import (
     IndexView,
     my_profile,
@@ -11,13 +13,15 @@ from habit_tracker.views import (
     assign_habit_to_user,
     RegisterView,
     UserHabitDetailUpdateView,
-    remove_habit_from_user, HabitDetailCreateView,
+    remove_habit_from_user,
+    HabitDetailCreateView,
 )
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
     path("accounts/", include("django.contrib.auth.urls")),
-    path('register/', RegisterView.as_view(), name='register'),
+    path('accounts/admin/', admin.site.urls),
+    path('accounts/register/', RegisterView.as_view(), name='register'),
     path(
         "confirm/update_days_to_achieve/<int:detail_id>/<str:operation>/",
         confirm_operation,
