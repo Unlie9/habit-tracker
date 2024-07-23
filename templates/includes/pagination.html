@@ -2,7 +2,7 @@
 	<ul class="pagination pagination-sm pagination-yellow justify-content-center">
 		<li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
 			{% if page_obj.has_previous %}
-				<a class="page-link bg-warning text-black border-warning" href="?page={{ page_obj.previous_page_number }}"
+				<a class="page-link bg-warning text-dark border-warning" href="?page={{ page_obj.previous_page_number }}"
 					 aria-label="Previous">
 					<span aria-hidden="true">&laquo;</span> Prev
 				</a>
@@ -24,7 +24,7 @@
 					Next <span aria-hidden="true">&raquo;</span>
 				</a>
 			{% else %}
-				<span class="page-link bg-warning text-black border-warning" aria-label="Next">
+				<span class="page-link bg-warning text-dark border-warning" aria-label="Next">
                     Next <span aria-hidden="true">&raquo;</span>
                 </span>
 			{% endif %}
