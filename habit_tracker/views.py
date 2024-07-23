@@ -116,7 +116,7 @@ class HabitListView(LoginRequiredMixin, ListView):
         assigned_habits = UserHabit.objects.filter(user=user).values_list("habit_id", flat=True)
         num_habits = Habit.objects.exclude(id__in=assigned_habits).count()
 
-        context["user_habits"] = UserHabit.objects.filter(user=user)
+        context["user_habits"] = UserHabit.objects.filter(user=user).order_by("-date_of_assign")
         search_form = HabitSearchForm(self.request.GET)
         context["num_habits"] = num_habits
         context["search_form"] = search_form
@@ -167,10 +167,11 @@ def assign_habit_to_user(request, pk):
     user = request.user
     habit = get_object_or_404(Habit, pk=pk)
 
-    user_habit, created = UserHabit.objects.get_or_create(user=user, habit=habit)
-    if created:
-        user_habit.save()
-        UserHabitDetail.objects.create(user_habit=user_habit)
+    with transaction.atomic():
+        user_habit, created = UserHabit.objects.get_or_create(user=user, habit=habit)
+        if created:
+            user_habit.save()
+            UserHabitDetail.objects.create(user_habit=user_habit)
 
     return redirect(reverse_lazy("all-habits"))
 
