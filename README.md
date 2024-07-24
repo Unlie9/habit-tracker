@@ -7,4 +7,12 @@ Every day you need to press buttons that you completed or not completed habit to
 You will need 21 days by default to consolidate the habit, also you can set your own value.
 
 ## Installation
-  
+```
+git clone git@github.com:Unlie9/habit-tracker.git
+cd habit-tracker
+python -m venv venv
+pip install requirements.txt
+python manage.py runserver
+```
+
+## Interface
