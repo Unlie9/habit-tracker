@@ -16,3 +16,4 @@ python manage.py runserver
 ```
 
 ## Interface
+![main](https://github.com/user-attachments/assets/e694ade5-2dc3-4612-8940-f2b1fa80705e)
