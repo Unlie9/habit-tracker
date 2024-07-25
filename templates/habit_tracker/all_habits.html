@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+	<main style="height: 91%" class="d-flex flex-column align-items-center justify-content-center bg-dark text-light">
+		<div class="container py-5">
+			<h3 class="text-light text-center mb-5"><em class="text-warning h3">Global habits list</em></h3>
+			<div class="d-flex justify-content-between align-items-center my-3">
+				<em class="text-warning h3">Available Habits: {{ num_habits }}</em>
+				<a href="{% url 'create-habit' %}" class="btn btn-outline-warning">Create global habit</a>
+			</div>
+			<form style="margin: auto; width: 20%; padding-bottom: 20px" class="form-inline" method="GET">
+				<div class="input-group">
+					<input type="text" class="form-control" name="name" placeholder="Search by name"
+								 aria-label="Search">
+					<div class="input-group-append">
+						<button class="btn btn-warning" type="submit">Search</button>
+					</div>
+				</div>
+			</form>
+			<div class="progress mb-4" style="height: .4rem; background-color: greenyellow;"></div>
+			<div class="table-responsive">
+				<table class="table table-dark table-hover text-light rounded shadow">
+					<thead class="">
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Assign</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for habit in habits_list %}
+						{% if habit not in user_habits %}
+							<tr>
+								<td>{{ habit.name }}</td>
+								<td>{{ habit.description }}</td>
+								<td class="actions-column">
+									<a href="{% url "assign-habit" habit.pk %}" class="btn btn-outline-success btn-sm">Assign</a>
+								</td>
+							</tr>
+						{% endif %}
+					{% empty %}
+						<tr>
+							<td colspan="3" class="text-center">No habits available</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+{% endblock %}

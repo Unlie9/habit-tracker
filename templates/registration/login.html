@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<main class="log">
+		<div class="d-flex flex-column align-items-center py-5 container-fluid w-25 text-center">
+				<img style="padding: 16px; width: 200px" class="logo" src="/static/assets/logo.png" alt="logo">
+			<form action="{% url 'login' %}" method="post">
+				{% csrf_token %}
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" placeholder="Username" id="username" name="username" autofocus>
+				</div>
+				<div class="input-group mb-3">
+					<input type="password" class="form-control" placeholder="Password" id="password" name="password">
+				</div>
+				<button type="submit" class="btn btn-outline-warning w-100 mb-3">Login</button>
+			</form>
+			<p style="color: goldenrod">Don't have account? Register <a style="color: white" href="{% url 'register' %}">here</a></p>
+		</div>
+	</main>
+{% endblock %}

@@ -1,0 +1,50 @@
+[
+  {
+    "model": "habit_tracker.habit",
+    "pk": 1,
+    "fields": {
+      "name": "Read Books",
+      "description": "Read at least 20 pages daily"
+    }
+  },
+  {
+    "model": "habit_tracker.habit",
+    "pk": 2,
+    "fields": {
+      "name": "Exercise",
+      "description": "30 minutes of exercise"
+    }
+  },
+  {
+    "model": "habit_tracker.habit",
+    "pk": 3,
+    "fields": {
+      "name": "Meditation",
+      "description": "Meditate for 10 minutes"
+    }
+  },
+  {
+    "model": "habit_tracker.habit",
+    "pk": 4,
+    "fields": {
+      "name": "Read Books Again",
+      "description": "Read at least 20 pages daily"
+    }
+  },
+  {
+    "model": "habit_tracker.habit",
+    "pk": 5,
+    "fields": {
+      "name": "Exercise Again",
+      "description": "30 minutes of exercise"
+    }
+  },
+  {
+    "model": "habit_tracker.habit",
+    "pk": 6,
+    "fields": {
+      "name": "Meditation Again",
+      "description": "Meditate for 10 minutes"
+    }
+  }
+  ]
