@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", 'django-insecure-duugbi7hexc=#zb_-)!hwocmi_n01w&xjko(230-k_hee4!+#x')
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '9dgb0@llzp__inia5jq$1#5#7gbp8scaqsiym!t*nrzbp+7230')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
@@ -41,12 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'habit_tracker',
     'crispy_forms',
-    'crispy_bootstrap4'
 ]
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
