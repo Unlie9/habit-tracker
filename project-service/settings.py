@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'habit_tracker',
     'crispy_forms',
+    'crispy_bootstrap4'
+
 ]
 
 
@@ -132,6 +134,9 @@ STATIC_ROOT = 'staticfiles/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 ASSETS_ROOT = "static/assets"
 
