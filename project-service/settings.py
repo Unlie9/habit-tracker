@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'habit_tracker',
     'crispy_forms',
     'crispy_bootstrap4'
-
 ]
 
 
