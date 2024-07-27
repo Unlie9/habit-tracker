@@ -2,7 +2,7 @@ import os
 import django
 from django.core.management import call_command
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project-service.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'habit-tracker.settings')
 django.setup()
 
 
