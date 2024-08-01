@@ -18,8 +18,11 @@ python manage.py runserver
 ## Deploy url
 https://habit-tracker-43jt.onrender.com/
 
-## Data to login
-re
+## Login Data
+# User
+Unlie9
+
+# Password
 12344321Qz
 
 ## Interface
