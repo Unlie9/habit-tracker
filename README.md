@@ -15,5 +15,8 @@ pip install requirements.txt
 python manage.py runserver
 ```
 
+## Global url
+https://habit-tracker-43jt.onrender.com/
+
 ## Interface
 ![main](https://github.com/user-attachments/assets/e694ade5-2dc3-4612-8940-f2b1fa80705e)
