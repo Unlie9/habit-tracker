@@ -57,8 +57,7 @@ class UserHabitDetail(models.Model):
     def achieved_habit_is_true(self):
         if self.days_to_achieve < 1:
             return "Yes"
-        else:
-            return "No"
+        return "No"
 
     def __str__(self):
         return (f"{self.user_habit.habit.name} (Days to achieve: {self.days_to_achieve})"
