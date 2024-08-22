@@ -30,7 +30,7 @@ class IndexView(LoginRequiredMixin, ListView):
     model = UserHabitDetail
     template_name = 'habit_tracker/index.html'
     context_object_name = 'user_habit_details'
-    paginate_by = 3
+    paginate_by = None
 
     def get_queryset(self):
         user = self.request.user
@@ -221,32 +221,38 @@ class RegisterView(CreateView):
     success_url = reverse_lazy("login")
 
 
-@login_required
-def my_profile(request):
-    user = request.user
+class MyProfileView(LoginRequiredMixin, ListView):
+    template_name = "habit_tracker/my_profile.html"
+    context_object_name = "user_habit_details"
+    paginate_by = 3
 
-    user_habits = UserHabit.objects.filter(user=user)
-    user_habit_details = UserHabitDetail.objects.filter(user_habit__user=user)
+    def get_queryset(self):
+        user = self.request.user
+        user_habits = UserHabit.objects.filter(user=user)
+        user_habit_details = UserHabitDetail.objects.filter(user_habit__user=user)
 
-    search_form = HabitSearchForm(request.GET)
-    if search_form.is_valid():
-        name_search = search_form.cleaned_data.get("name")
-        if name_search:
-            user_habit_details = user_habit_details.filter(user_habit__habit__name__icontains=name_search)
+        search_form = HabitSearchForm(self.request.GET)
+        if search_form.is_valid():
+            name_search = search_form.cleaned_data.get("name")
+            if name_search:
+                user_habit_details = user_habit_details.filter(user_habit__habit__name__icontains=name_search)
 
-    num_visits = request.session.get("num_visits", 0) + 1
-    request.session["num_visits"] = num_visits
+        return user_habit_details
 
-    context = {
-        "user": user,
-        "user_habits": user_habits,
-        "num_user_habits": user_habit_details.count(),
-        "num_visits": num_visits,
-        "search_form": search_form,
-        "user_habit_details": user_habit_details,
-    }
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
 
-    return render(request, "habit_tracker/my_profile.html", context)
+        context['user'] = user
+        context['user_habits'] = UserHabit.objects.filter(user=user)
+        context['num_user_habits'] = self.get_queryset().count()
+        context['search_form'] = HabitSearchForm(self.request.GET)
+
+        num_visits = self.request.session.get("num_visits", 0) + 1
+        self.request.session["num_visits"] = num_visits
+        context['num_visits'] = num_visits
+
+        return context
 
 
 @login_required

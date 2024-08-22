@@ -1,111 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Подключение Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Блок заголовка страницы -->
-    {% block title %}<title>Habit-Tracker</title>{% endblock %}
-    
-    <!-- Основные метаданные -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Подключение Bootstrap и основного стиля -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    
-    <!-- Встроенные стили -->
-    <style>
-        html, body {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Исключаем горизонтальную прокрутку */
-        }
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        body {
-            background-color: #888888;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* Минимальная высота 100% */
-        }
+	{% block title %}<title>Habit-Tracker</title>{% endblock %}
 
-        .main-content {
-            background-color: #2e2e2e;
-            width: 100%;
-            flex: 1; /* Заполняет все доступное пространство */
-            overflow-y: auto;
-            box-sizing: border-box;
-            padding: 20px; /* Добавляем отступы для контента */
-        }
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        /* Адаптация таблиц для мобильных устройств */
-        .table-responsive {
-            -webkit-overflow-scrolling: touch; /* Плавная прокрутка на iOS */
-        }
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+				integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'styles.css' %}">
 
-        /* Оптимизация контента для мобильных устройств */
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 10px;
-            }
-            .table {
-                font-size: 14px; /* Уменьшаем шрифт для мобильных устройств */
-            }
-        }
-    </style>
+	<style>
+      html, body {
+          height: 100%;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+      }
+
+      body {
+          background-color: #888888;
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+      }
+
+      .main-content {
+          background-color: #2e2e2e;
+          width: 100%;
+          flex: 1;
+          overflow-y: auto;
+          box-sizing: border-box;
+          padding: 20px;
+          margin-top: 72px;
+      }
+
+      .table-responsive {
+          -webkit-overflow-scrolling: touch;
+      }
+
+      @media (max-width: 768px) {
+          .main-content {
+              padding: 10px;
+          }
+
+          .table {
+              font-size: 14px;
+          }
+      }
+	</style>
 </head>
 <body>
 
 {% if not request.path == "/accounts/login/" and not request.path == "/accounts/register/" %}
-    {% block sidebar %}
-        {% include "includes/sidebar.html" %}
-    {% endblock %}
+	{% block sidebar %}
+		{% include "includes/sidebar.html" %}
+	{% endblock %}
 {% endif %}
 
 <main class="main-content">
-    {% block content %}
-    <div class="table-responsive">
-        <table class="table table-dark table-bordered">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    {% endblock %}
+	{% block content %}
 
+	{% endblock %}
+	{% block pagination %}
+		{% include "includes/pagination.html" %}
+	{% endblock %}
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc2GmFw8ebRYhrA5H6qL3eRX2DR+aOqFhJdKGj5Jf" crossorigin="anonymous"></script>
+				integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc2GmFw8ebRYhrA5H6qL3eRX2DR+aOqFhJdKGj5Jf"
+				crossorigin="anonymous"></script>
 </body>
 </html>

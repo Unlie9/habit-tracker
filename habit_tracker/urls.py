@@ -5,7 +5,7 @@ from django.urls import (
 )
 from habit_tracker.views import (
     IndexView,
-    my_profile,
+    MyProfileView,
     MyHabitsListView,
     confirm_operation,
     complete_operation,
@@ -32,7 +32,7 @@ urlpatterns = [
     path("all_habits/<int:pk>/assign_habit/", assign_habit_to_user, name="assign-habit"),
     path("all_habits/<int:pk>/remove_from_my_list/", remove_habit_from_user, name="remove-habit"),
     path("all_habits/<int:pk>/update_habit/", HabitUpdateView.as_view(), name="update-habit"),
-    path("my_profile/", my_profile, name="my-profile"),
+    path("my_profile/", MyProfileView.as_view(), name="my-profile"),
     path(
         "confirm/update_days_to_achieve/<int:detail_id>/<str:operation>/",
         confirm_operation,
