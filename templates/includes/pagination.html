@@ -1,33 +1,33 @@
 {% if is_paginated %}
-	<ul class="pagination pagination-sm pagination-yellow justify-content-center">
-		<li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
-			{% if page_obj.has_previous %}
-				<a class="page-link bg-warning text-dark border-warning" href="?page={{ page_obj.previous_page_number }}"
-					 aria-label="Previous">
-					<span aria-hidden="true">&laquo;</span> Prev
-				</a>
-			{% else %}
-				<span class="page-link bg-warning text-dark border-warning" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span> Prev
+    <ul class="pagination justify-content-center my-3">
+        <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+            {% if page_obj.has_previous %}
+                <a class="page-link text-dark border-0 px-3" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    &laquo; Prev
+                </a>
+            {% else %}
+                <span class="page-link text-muted border-0 px-3" aria-label="Previous">
+                    &laquo; Prev
                 </span>
-			{% endif %}
-		</li>
-		<li class="page-item active">
-            <span class="page-link bg-warning text-dark border-warning">
+            {% endif %}
+        </li>
+        
+        <li class="page-item active">
+            <span class="page-link text-dark bg-transparent border-0 px-3">
                 {{ page_obj.number }}
             </span>
-		</li>
-		<li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
-			{% if page_obj.has_next %}
-				<a class="page-link bg-warning text-dark border-warning" href="?page={{ page_obj.next_page_number }}"
-					 aria-label="Next">
-					Next <span aria-hidden="true">&raquo;</span>
-				</a>
-			{% else %}
-				<span class="page-link bg-warning text-dark border-warning" aria-label="Next">
-                    Next <span aria-hidden="true">&raquo;</span>
+        </li>
+        
+        <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+            {% if page_obj.has_next %}
+                <a class="page-link text-dark border-0 px-3" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    Next &raquo;
+                </a>
+            {% else %}
+                <span class="page-link text-muted border-0 px-3" aria-label="Next">
+                    Next &raquo;
                 </span>
-			{% endif %}
-		</li>
-	</ul>
+            {% endif %}
+        </li>
+    </ul>
 {% endif %}

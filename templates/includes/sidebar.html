@@ -1,38 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0 px-5 fixed-top shadow-lg">
-	<div class="container-fluid mx-4">
-		<img src="/static/assets/logo.png" alt="logo" style="height: 50px; padding: 6px; padding-right: 4%">
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarText">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item p-2 mx-1">
-					<a class="btn btn-outline-warning shadow-sm" href="{% url 'index' %}">Home</a>
-				</li>
-				<li class="nav-item p-2 mx-1">
-					<a class="btn btn-outline-warning shadow-sm" href="{% url 'my-profile' %}">My Profile</a>
-				</li>
-				<li class="nav-item p-2 mx-1">
-					<a class="btn btn-outline-warning shadow-sm" href="{% url 'my-habits' %}">My Habits Details</a>
-				</li>
-				<li class="nav-item p-2 mx-1">
-					<a class="btn btn-outline-warning shadow-sm" href="{% url 'all-habits' %}">Global habits</a>
-				</li>
-			</ul>
-			<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-				{% if user.is_authenticated %}
-					<li class="nav-item p-2 mx-1">
-						<form method="post" action="{% url 'logout' %}">
-							{% csrf_token %}
-							<button type="submit" class="btn btn-danger">Logout</button>
-						</form>
-					</li>
-				{% else %}
-					<li class="nav-item p-2 mx-1">
-						<a class="btn btn-success" href="{% url 'login' %}">Login</a>
-					</li>
-				{% endif %}
-			</ul>
-		</div>
-	</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed-top">
+    <div class="container-fluid">
+        <a href="{% url 'index' %}" style="padding-right: 360px; padding-left: 30px">
+            <img src="/static/assets/logo.png" alt="logo" style="height: 40px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText" style="padding: 4px">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item mx-2" style="padding-right: 15px">
+                    <a class="btn btn-outline-light px-4 py-2" href="{% url 'index' %}" style="background-color: #6a0dad; border-color: #6a0dad;">Home</a>
+                </li>
+                <li class="nav-item mx-2" style="padding-right: 15px">
+                    <a class="btn btn-outline-light px-4 py-2" href="{% url 'my-profile' %}" style="background-color: #6a0dad; border-color: #6a0dad;">My Profile</a>
+                </li>
+                <li class="nav-item mx-2" style="padding-right: 15px">
+                    <a class="btn btn-outline-light px-4 py-2" href="{% url 'my-habits' %}" style="background-color: #6a0dad; border-color: #6a0dad;">My Habits Details</a>
+                </li>
+                <li class="nav-item mx-2" style="padding-right: 300px">
+                    <a class="btn btn-outline-light px-4 py-2" href="{% url 'all-habits' %}" style="background-color: #6a0dad; border-color: #6a0dad;">Global habits</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item mx-2">
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-light px-4 py-2" style="background-color: #6a0dad; border-color: #6a0dad;">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item mx-2">
+                        <a class="btn btn-outline-light px-4 py-2" href="{% url 'login' %}" style="background-color: #6a0dad; border-color: #6a0dad;">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </nav>

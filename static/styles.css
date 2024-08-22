@@ -3,10 +3,6 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover {
-    background-color: #ffc107;
-    color: #000;
-}
 
 form label {
     min-width: 100px;
