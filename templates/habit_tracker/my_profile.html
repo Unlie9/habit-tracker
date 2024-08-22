@@ -62,12 +62,12 @@
 									<td>{{ detail.user_habit.habit.name }}</td>
 									<td>
 										<a href="{% url 'confirm_operation' detail.id 'completed' %}">
-											<img src="{% static 'assets/pur_plus.png' %}" width="20" alt="Completed">
+											<img src="{% static 'assets/pur_plus.png' %}" width="25px" alt="Completed">
 										</a>
 									</td>
 									<td>
 										<a href="{% url 'confirm_operation' detail.id 'not completed' %}">
-											<img src="{% static 'assets/minus.png' %}" width="20" alt="Not Completed">
+											<img src="{% static 'assets/minus.png' %}" width="25px" alt="Not Completed">
 										</a>
 									</td>
 									<td>{{ detail.skip_day|yesno:"Yes,No" }}</td>
@@ -83,7 +83,7 @@
 									</td>
 									<td>
 										<a href="{% url 'confirm_operation' detail.id 'reset' %}">
-											<img src="{% static 'assets/reset.png' %}" width="20" alt="Reset">
+											<img src="{% static 'assets/reset.png' %}" width="35px" alt="Reset">
 										</a>
 									</td>
 								</tr>

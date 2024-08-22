@@ -23,5 +23,8 @@ https://habit-tracker-43jt.onrender.com/
 - Password: "12344321Qz"
 
 ## Interface
-![main](https://github.com/user-attachments/assets/e694ade5-2dc3-4612-8940-f2b1fa80705e)
+![My Image](static/assets/4photo.jpeg)
+![My Image](static/assets/3photo.jpeg)
+![My Image](static/assets/1photo.jpeg)
+![My Image](static/assets/2photo.jpeg)
 
