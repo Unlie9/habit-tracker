@@ -6,14 +6,14 @@
     <div class="container py-4">
         <h3 class="text-center mb-4">Hi, <strong>{{ user.username }}</strong>!</h3>
         <p class="text-center mb-4">Active habits: <strong>{{ num_user_habits }}</strong></p>
-        
+
         <form class="mb-4" method="get" action="" style="max-width: 300px; margin: auto;">
             <div class="input-group">
                 <input type="text" class="form-control" name="name" placeholder="Search by name" aria-label="Search">
                 <button class="btn btn-dark" type="submit">Search</button>
             </div>
         </form>
-        
+
         <div class="table-responsive">
             <table class="table table-borderless text-center">
                 <thead>
@@ -66,7 +66,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <p class="text-muted text-center mt-4">Page visits: {{ num_visits }}</p>
     </div>
 </main>

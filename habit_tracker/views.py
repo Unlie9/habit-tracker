@@ -205,7 +205,7 @@ def remove_habit_from_user(request, pk):
 class UserHabitDetailUpdateView(LoginRequiredMixin, UpdateView):
     model = UserHabitDetail
     fields = ["days_to_achieve"]
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("my-profile")
 
     def form_valid(self, form):
         if form.instance.days_to_achieve < 1:
@@ -224,7 +224,29 @@ class RegisterView(CreateView):
 @login_required
 def my_profile(request):
     user = request.user
-    return render(request, "habit_tracker/my_profile.html", {"user": user})
+
+    user_habits = UserHabit.objects.filter(user=user)
+    user_habit_details = UserHabitDetail.objects.filter(user_habit__user=user)
+
+    search_form = HabitSearchForm(request.GET)
+    if search_form.is_valid():
+        name_search = search_form.cleaned_data.get("name")
+        if name_search:
+            user_habit_details = user_habit_details.filter(user_habit__habit__name__icontains=name_search)
+
+    num_visits = request.session.get("num_visits", 0) + 1
+    request.session["num_visits"] = num_visits
+
+    context = {
+        "user": user,
+        "user_habits": user_habits,
+        "num_user_habits": user_habit_details.count(),
+        "num_visits": num_visits,
+        "search_form": search_form,
+        "user_habit_details": user_habit_details,
+    }
+
+    return render(request, "habit_tracker/my_profile.html", context)
 
 
 @login_required
@@ -258,4 +280,4 @@ def complete_operation(request, detail_id, operation):
 
         detail.save()
 
-    return redirect("index")
+    return redirect("my-profile")

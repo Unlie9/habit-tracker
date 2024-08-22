@@ -1,10 +1,123 @@
-
-.navbar-dark .navbar-nav .nav-link {
-    transition: background-color 0.3s, color 0.3s;
+:root {
+    --primary-color: #800080; /* Фиолетовый цвет */
+    --text-light-color: #ffffff; /* Белый цвет для текста */
+    white-space: nowrap;
 }
 
+/* Стили для текста с фиолетовым фоном */
+.text-primary {
+    color: var(--text-light-color) !important;
+    background-color: var(--primary-color) !important;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Тень для текста */
+    display: inline-block; /* Чтобы фон обтекал текст */
+    white-space: nowrap;
+}
 
-form label {
-    min-width: 100px;
-    margin: 0;
+/* Стили для кнопок */
+.btn-outline-primary {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+    white-space: nowrap;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4) !important;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #fff !important;
+    white-space: nowrap;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Стили для ссылок */
+a.text-primary,
+a.text-primary:hover,
+a.text-primary:focus,
+a.text-primary:active {
+    color: var(--text-light-color) !important;
+    background-color: var(--primary-color) !important;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    display: inline-block;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.pagination .page-link {
+    color: #ffffff;
+    background-color: #800080;
+    border-radius: 5px;
+    border: none;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #6a006a;
+    border-color: #6a006a;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #333;
+    border: none;
+}
+
+.pagination .page-link:hover {
+    background-color: #9a009a;
+    color: #ffffff;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+.pagination .page-link {
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.button {
+
 }

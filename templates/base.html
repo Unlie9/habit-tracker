@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Подключение Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Блок заголовка страницы -->
     {% block title %}<title>Habit-Tracker</title>{% endblock %}
+    
+    <!-- Основные метаданные -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Подключение Bootstrap и основного стиля -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
           integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    
+    <!-- Встроенные стили -->
     <style>
         html, body {
             height: 100%;
-						width: 100%;
+            width: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            overflow-x: hidden; /* Исключаем горизонтальную прокрутку */
         }
 
         body {
             background-color: #888888;
             display: flex;
             flex-direction: column;
+            min-height: 100vh; /* Минимальная высота 100% */
         }
 
         .main-content {
-    			background-color: #2e2e2e;
-    			width: 100%;
-    			height: 100%;
-    			overflow-y: auto;
-    			box-sizing: border-box;
-				}	
-
-        footer {
+            background-color: #2e2e2e;
             width: 100%;
-            background-color: #343a40;
-            color: #ffffff;
-            padding: 10px;
-            text-align: center;
-            margin-top: auto;
+            flex: 1; /* Заполняет все доступное пространство */
+            overflow-y: auto;
+            box-sizing: border-box;
+            padding: 20px; /* Добавляем отступы для контента */
+        }
+
+        /* Адаптация таблиц для мобильных устройств */
+        .table-responsive {
+            -webkit-overflow-scrolling: touch; /* Плавная прокрутка на iOS */
+        }
+
+        /* Оптимизация контента для мобильных устройств */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 10px;
+            }
+            .table {
+                font-size: 14px; /* Уменьшаем шрифт для мобильных устройств */
+            }
         }
     </style>
 </head>
 <body>
+
 {% if not request.path == "/accounts/login/" and not request.path == "/accounts/register/" %}
     {% block sidebar %}
         {% include "includes/sidebar.html" %}
@@ -83,21 +101,11 @@
         </table>
     </div>
     {% endblock %}
-    {% block pagination %}
-        {% include "includes/pagination.html" %}
-    {% endblock %}
+
 </main>
 
-<footer class="bg-dark text-center text-light p-1">
-    <a href="https://github.com/Unlie9/habit-tracker" target="_blank">
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" class="bi bi-github" fill="gray" viewBox="0 0 16 16">
-            <path d="M8 0a8 8 0 0 0-2.529 15.595c.4.073.549-.173.549-.385v-1.418c-2.235.487-2.709-1.073-2.709-1.073-.365-.929-.892-1.175-.892-1.175-.729-.498.056-.488.056-.488.809.057 1.233.832 1.233.832.717 1.223 1.883.868 2.339.665.072-.518.28-.868.51-1.067-1.778-.202-3.644-.889-3.644-3.952 0-.874.312-1.588.823-2.147-.083-.202-.357-1.015.078-2.115 0 0 .669-.215 2.192.82.636-.177 1.32-.266 2-.27.678.004 1.363.093 2 .27 1.523-1.035 2.191-.82 2.191-.82.435 1.1.162 1.913.078 2.115.511.559.823 1.273.823 2.147 0 3.071-1.876 3.749-3.651 3.946.287.248.541.736.541 1.482v2.2c0 .215.146.463.554.385A8 8 0 0 0 8 0z"/>
-        </svg>
-    </a>
-</footer>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlB06moHlc6bPpTB6vKvH4czirT5r5v6bV6dIpqYJzQJ+47Kc5b4v8QbsK3" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+0pkePd2SNwflJrWz7GC2B7A95ldgWqUUxBByCXK4e3CkFIDyP5aA3dk6" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc2GmFw8ebRYhrA5H6qL3eRX2DR+aOqFhJdKGj5Jf" crossorigin="anonymous"></script>
 </body>
 </html>

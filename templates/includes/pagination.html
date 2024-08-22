@@ -1,31 +1,31 @@
 {% if is_paginated %}
-    <ul class="pagination justify-content-center my-3">
+    <ul class="pagination pagination-sm justify-content-center">
         <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
             {% if page_obj.has_previous %}
-                <a class="page-link text-dark border-0 px-3" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                    &laquo; Prev
+                <a class="page-link bg-dark text-light border-secondary" href="?page={{ page_obj.previous_page_number }}"
+                     aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span> Prev
                 </a>
             {% else %}
-                <span class="page-link text-muted border-0 px-3" aria-label="Previous">
-                    &laquo; Prev
+                <span class="page-link bg-dark text-muted border-secondary" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span> Prev
                 </span>
             {% endif %}
         </li>
-        
         <li class="page-item active">
-            <span class="page-link text-dark bg-transparent border-0 px-3">
+            <span class="page-link bg-dark text-light border-secondary">
                 {{ page_obj.number }}
             </span>
         </li>
-        
         <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
             {% if page_obj.has_next %}
-                <a class="page-link text-dark border-0 px-3" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                    Next &raquo;
+                <a class="page-link bg-dark text-light border-secondary" href="?page={{ page_obj.next_page_number }}"
+                     aria-label="Next">
+                    Next <span aria-hidden="true">&raquo;</span>
                 </a>
             {% else %}
-                <span class="page-link text-muted border-0 px-3" aria-label="Next">
-                    Next &raquo;
+                <span class="page-link bg-dark text-muted border-secondary" aria-label="Next">
+                    Next <span aria-hidden="true">&raquo;</span>
                 </span>
             {% endif %}
         </li>
