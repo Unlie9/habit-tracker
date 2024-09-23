@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+	<main class="d-flex flex-column align-items-center justify-content-center"
+				style="min-height: 91%; background-color: #2c2c2c; color: #e0e0e0;">
+		<div class="container py-5">
+			<h3 class="text-center mb-5">
+				<em class="text-primary">My habits list</em>
+			</h3>
+			<div class="d-flex justify-content-between align-items-center my-3">
+				<em class="text-primary h3">Active habits: {{ num_user_habits }}</em>
+				<a href="{% url 'my-habits-create' %}" class="btn btn-primary">Create my habit</a>
+			</div>
+			<form class="mb-4" method="get" action="" style="max-width: 300px; margin: auto;">
+				<div class="input-group">
+					<input type="text" class="form-control bg-dark text-light" name="name" placeholder="Search by name"
+								 aria-label="Search">
+					<div class="input-group-append">
+						<button class="btn btn-light" type="submit">Search</button>
+					</div>
+				</div>
+			</form>
+			<div class="table-responsive shadow-lg rounded" style="background-color: #1f1f1f; padding: 20px;">
+				<table class="table table-borderless text-center text-light mb-0">
+					<thead>
+					<tr style="border-bottom: 1px solid #444;">
+						<th>Name</th>
+						<th>Description</th>
+						<th>Days to Achieve</th>
+						<th>Date of Assign</th>
+						<th>Achieved Habit</th>
+						<th>Edit</th>
+						<th>Remove from list</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for detail in user_habit_details %}
+						<tr style="border-bottom: 1px solid #444;">
+							<td>{{ detail.user_habit.habit.name }}</td>
+							<td style="padding-left: 30px">{{ detail.user_habit.habit.description }}</td>
+							<td style="">
+								{% if detail.days_to_achieve > 0 %}
+									{{ detail.days_to_achieve }}
+								{% else %}
+									Completed
+								{% endif %}
+							</td>
+							<td>{{ detail.user_habit.date_of_assign }}</td>
+							<td>{{ detail.achieved_habit_is_true }}</td>
+							<td class="actions-column">
+								<a href="{% url 'update-habit' detail.user_habit.habit.pk %}" class="btn btn-primary btn-sm">Edit</a>
+							</td>
+							<td class="actions-column">
+								<a href="{% url 'remove-habit' detail.user_habit.habit.pk %}" class="btn btn-outline-danger btn-sm">Remove</a>
+							</td>
+						</tr>
+					{% empty %}
+						<tr>
+							<td colspan="7" class="text-center">No habits available</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+{% endblock %}

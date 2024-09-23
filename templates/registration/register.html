@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main class="log">
+    <div class="d-flex flex-column align-items-center py-5 container-fluid w-25 text-center">
+            <img style="width: 150px; padding: 16px" class="logo" src="/static/assets/logo.png" alt="logo">
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Username" id="username" name="username" required autofocus>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="First Name" id="first_name" name="first_name" required>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Last Name" id="last_name" name="last_name" required>
+            </div>
+            <div class="input-group mb-3">
+                <input type="email" class="form-control" placeholder="Email" id="email" name="email" required>
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="Password" id="password1" name="password1" required>
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="Confirm Password" id="password2" name="password2" required>
+            </div>
+            <button type="submit" class="btn btn-outline-warning w-100 mb-3">Register</button>
+        </form>
+        <p style="color: goldenrod">Already have an account? Login <a style="color: white" href="{% url 'login' %}">here</a></p>
+    </div>
+</main>
+{% endblock %}

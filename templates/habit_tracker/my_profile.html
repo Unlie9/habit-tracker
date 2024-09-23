@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+	<div class="d-flex flex-column align-items-center justify-content-center"
+			 style="background-color: #2c2c2c; color: #e0e0e0; margin-bottom: 1px; height: 80%">
+		<div class="container py-4">
+			<div class="row align-items-stretch">
+				<div class="col-md-4 d-flex">
+					<div
+							class="card shadow-lg bg-dark text-light border-0 flex-fill d-flex flex-column align-items-center justify-content-center"
+							style="border-radius: 15px;">
+						<div class="card-body text-center">
+							<div class="mb-4">
+								<img class="img-fluid rounded-circle shadow" style="width: 150px;"
+										 src="{% static 'assets/me.jpg/me.jpg' %}" alt="Profile Picture">
+							</div>
+							<h2 class="card-title mb-4">My Profile</h2>
+							<p class="card-text">
+								<strong>Username:</strong> {{ user.username }}
+							</p>
+							<p class="card-text">
+								<strong>Email:</strong> {{ user.email }}
+							</p>
+							<p class="card-text">
+								<strong>First name:</strong> {{ user.first_name }}
+							</p>
+							<p class="card-text">
+								<strong>Last name:</strong> {{ user.last_name }}
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8 d-flex">
+					<div class="table-responsive shadow-lg rounded flex-fill" style="background-color: #1f1f1f; padding: 20px;">
+						<h3 class="text-center mb-4">Hi, <strong>{{ user.username }}</strong>!</h3>
+						<p class="text-center mb-4">Active habits: <strong>{{ num_user_habits }}</strong></p>
+
+						<form class="mb-4" method="get" action="" style="max-width: 300px; margin: auto;">
+							<div class="input-group">
+								<input type="text" class="form-control bg-dark text-light" name="name" placeholder="Search by name"
+											 aria-label="Search">
+								<button class="btn btn-light" type="submit">Search</button>
+							</div>
+						</form>
+
+						<table class="table table-borderless text-center text-light mb-0">
+							<thead>
+							<tr style="border-bottom: 1px solid #444;">
+								<th>Habit</th>
+								<th>Completed</th>
+								<th>Not Completed</th>
+								<th>Skip Day</th>
+								<th>Days Left</th>
+								<th>Edit</th>
+								<th>Reset</th>
+							</tr>
+							</thead>
+							<tbody>
+							{% for detail in user_habit_details %}
+								<tr style="border-bottom: 1px solid #444;">
+									<td>{{ detail.user_habit.habit.name }}</td>
+									<td>
+										<a href="{% url 'confirm_operation' detail.id 'completed' %}">
+											<img src="{% static 'assets/pur_plus.png' %}" width="25px" alt="Completed">
+										</a>
+									</td>
+									<td>
+										<a href="{% url 'confirm_operation' detail.id 'not completed' %}">
+											<img src="{% static 'assets/minus.png' %}" width="25px" alt="Not Completed">
+										</a>
+									</td>
+									<td>{{ detail.skip_day|yesno:"Yes,No" }}</td>
+									<td>
+										{% if detail.days_to_achieve %}
+											{{ detail.days_to_achieve }}
+										{% else %}
+											Completed
+										{% endif %}
+									</td>
+									<td>
+										<a href="{% url 'my-habits-update' pk=detail.id %}" class="btn btn-primary btn-sm">Edit</a>
+									</td>
+									<td>
+										<a href="{% url 'confirm_operation' detail.id 'reset' %}">
+											<img src="{% static 'assets/reset.png' %}" width="35px" alt="Reset">
+										</a>
+									</td>
+								</tr>
+							{% empty %}
+								<tr>
+									<td colspan="7">No habits assigned yet.</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

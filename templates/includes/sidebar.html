@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed-top">
+    <div class="container-fluid">
+        <a href="{% url 'index' %}" style="padding-left: 30px;">
+            <img src="/static/assets/logo.png" alt="logo" style="height: 40px;">
+        </a>
+				<a href="https://github.com/Unlie9/habit-tracker" target="_blank" style="padding-right: 160px; padding-left: 30px">
+					<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" class="bi bi-github" fill="gray" viewBox="0 0 16 16">
+						<path d="M8 0a8 8 0 0 0-2.529 15.595c.4.073.549-.173.549-.385v-1.418c-2.235.487-2.709-1.073-2.709-1.073-.365-.929-.892-1.175-.892-1.175-.729-.498.056-.488.056-.488.809.057 1.233.832 1.233.832.717 1.223 1.883.868 2.339.665.072-.518.28-.868.51-1.067-1.778-.202-3.644-.889-3.644-3.952 0-.874.312-1.588.823-2.147-.083-.202-.357-1.015.078-2.115 0 0 .669-.215 2.192.82.636-.177 1.32-.266 2-.27.678.004 1.363.093 2 .27 1.523-1.035 2.191-.82 2.191-.82.435 1.1.162 1.913.078 2.115.511.559.823 1.273.823 2.147 0 3.071-1.876 3.749-3.651 3.946.287.248.541.736.541 1.482v2.2c0 .215.146.463.554.385A8 8 0 0 0 8 0z"/>
+					</svg>
+				</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText" style="padding: 4px">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item mx-2" style="padding-right: 15px">
+                    <a class="btn btn-primary px-4 py-2" href="{% url 'index' %}" style="background-color: #6a0dad; border-color: #6a0dad;">Home</a>
+                </li>
+                <li class="nav-item mx-2" style="padding-right: 15px">
+                    <a class="btn btn-primary px-4 py-2" href="{% url 'my-profile' %}" style="background-color: #6a0dad; border-color: #6a0dad;">Management</a>
+                </li>
+                <li class="nav-item mx-2" style="padding-right: 15px">
+                    <a class="btn btn-primary px-4 py-2" href="{% url 'my-habits' %}" style="background-color: #6a0dad; border-color: #6a0dad;">My Habits Details</a>
+                </li>
+                <li class="nav-item mx-2" style="padding-right: 100px">
+                    <a class="btn btn-primary px-4 py-2" href="{% url 'all-habits' %}" style="background-color: #6a0dad; border-color: #6a0dad;">Global habits</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item mx-2">
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary px-4 py-2">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item mx-2">
+                        <a class="btn btn-primary px-4 py-2" href="{% url 'login' %}" style="background-color: #6a0dad; border-color: #6a0dad;">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

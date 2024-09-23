@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+	<div class="container my-5" style="padding-top: 50px">
+		<div class="row justify-content-center">
+			<div class="col-lg-10">
+				<h2 class="text-center mb-4 text-light">
+					<em class="text-primary">Welcome to the Platform</em>
+				</h2>
+				<div class="table-responsive">
+					<table class="table table-borderless">
+						<thead>
+						<tr class="text-light">
+							<th class="py-3">Page</th>
+							<th class="py-3">Description</th>
+						</tr>
+						</thead>
+						<tbody class="bg-dark text-light">
+						<tr>
+							<td class="align-middle py-3">
+								<div class="d-flex align-items-center">
+									<div class="step-number d-flex justify-content-center align-items-center mr-3">
+										<span class="h5 mb-0">1</span>
+									</div>
+									<span class="h6 mb-0">Management</span>
+								</div>
+							</td>
+							<td class="py-3">
+								Manage your habits for completing and see your profile
+							</td>
+						</tr>
+						<tr>
+							<td class="align-middle py-3">
+								<div class="d-flex align-items-center">
+									<div class="step-number d-flex justify-content-center align-items-center mr-3">
+										<span class="h5 mb-0">2</span>
+									</div>
+									<span class="h6 mb-0">My habits details</span>
+								</div>
+							</td>
+							<td class="py-3">
+								You can see your habits, remove them from your list and create your own habit
+							</td>
+						</tr>
+						<tr>
+							<td class="align-middle py-3">
+								<div class="d-flex align-items-center">
+									<div class="step-number d-flex justify-content-center align-items-center mr-3">
+										<span class="h5 mb-0">3</span>
+									</div>
+									<span class="h6 mb-0">Global habits</span>
+								</div>
+							</td>
+							<td class="py-3">
+								Browse global habits which available for all users, you can create habit for other users and assign them
+							</td>
+						</tr>
+						<tr>
+							<td class="align-middle py-3">
+								<div class="d-flex align-items-center">
+									<div class="step-number d-flex justify-content-center align-items-center mr-3">
+										<span class="h5 mb-0">4</span>
+									</div>
+									<span class="h6 mb-0">Logout</span>
+								</div>
+							</td>
+							<td class="py-3">
+								logout from your account where you can choose to login or register
+							</td>
+						</tr>
+						<tr>
+							<td class="align-middle py-3">
+								<div class="d-flex align-items-center">
+									<div class="step-number d-flex justify-content-center align-items-center mr-3">
+										<span class="h5 mb-0">5</span>
+									</div>
+									<span class="h6 mb-0">Finish</span>
+								</div>
+							</td>
+							<td class="py-3">
+								Enjoy by tracking your habits and become better :)
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<style>
+      .step-number {
+          width: 40px;
+          height: 40px;
+          background-color: var(--primary-color);
+          border-radius: 50%;
+          color: var(--text-light-color);
+      }
+
+      .table-borderless th, .table-borderless td {
+          border: none;
+      }
+
+      .table-borderless tbody tr {
+          transition: background-color 0.3s ease;
+      }
+
+      .table-borderless tbody tr:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+      }
+	</style>
+{% endblock %}

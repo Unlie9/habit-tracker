@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="d-flex flex-column align-items-center justify-content-center">
+    <div class="container h-100">
+        <h3 class="text-light p-0 mb-5">Assign Habit</h3>
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to assign "{{ object.name }}" to yourself?</p>
+            <button type="submit" class="btn btn-primary">Yes, Assign</button>
+            <a href="{% url 'all-habits' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</main>
+{% endblock %}
