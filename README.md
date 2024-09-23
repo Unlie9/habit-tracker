@@ -15,16 +15,8 @@ pip install requirements.txt
 python manage.py runserver
 ```
 
-## Deploy url
-https://habit-tracker-43jt.onrender.com/
-
-- Login Data
-- User: "Unlie9"
-- Password: "12344321Qz"
-
 ## Interface
 ![My Image](static/assets/4photo.jpeg)
 ![My Image](static/assets/3photo.jpeg)
 ![My Image](static/assets/1photo.jpeg)
 ![My Image](static/assets/2photo.jpeg)
-
